@@ -1,0 +1,281 @@
+/* ==========================================================================
+   CINEMATIC — Warm Editorial Design System & Styling
+   ========================================================================== */
+
+:root {
+  /* Warm Editorial Palette */
+  --bg-ivory: #F6F0E6;
+  --bg-sand: #EDE2D2;
+  --bg-card: #FAF6F0;
+  
+  --accent-burnt-orange: #C9572C;
+  --accent-deep-wine: #632C32;
+  --highlight-gold: #D7A84B;
+  --highlight-coral: #E9896A;
+  
+  --text-charcoal: #252322;
+  --text-muted: #746B63;
+  --text-light: #FAF6F0;
+
+  --border-light: rgba(116, 107, 99, 0.18);
+  --border-medium: rgba(116, 107, 99, 0.35);
+
+  /* Fonts */
+  --font-editorial: 'Playfair Display', Georgia, serif;
+  --font-italiana: 'Italiana', serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Elevations & Shadows */
+  --shadow-sm: 0 4px 12px rgba(37, 35, 34, 0.04);
+  --shadow-md: 0 12px 28px rgba(37, 35, 34, 0.08);
+  --shadow-lg: 0 24px 48px rgba(37, 35, 34, 0.12);
+
+  /* Transitions */
+  --ease-cinematic: cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-ivory);
+  color: var(--text-charcoal);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background-color: var(--bg-ivory);
+}
+
+/* Film Grain Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Typography Utilities */
+.font-editorial {
+  font-family: var(--font-editorial);
+}
+
+.font-italiana {
+  font-family: var(--font-italiana);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, .heading-editorial {
+  font-family: var(--font-editorial);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-charcoal);
+  line-height: 1.1;
+}
+
+p {
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-sand);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-burnt-orange);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-deep-wine);
+}
+
+/* Film Strip & Editorial Border Utility */
+.border-editorial {
+  border: 1px solid var(--border-light);
+}
+
+.border-editorial-dashed {
+  border: 1px dashed var(--border-medium);
+}
+
+/* Ticket Stub Style */
+.ticket-stub {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  position: relative;
+  border-radius: 2px;
+}
+.ticket-stub::before,
+.ticket-stub::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  background: var(--bg-ivory);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  border: 1px solid var(--border-light);
+}
+.ticket-stub::before {
+  left: -8px;
+}
+.ticket-stub::after {
+  right: -8px;
+}
+
+/* Stamp Badge */
+.stamp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--accent-burnt-orange);
+  color: var(--accent-burnt-orange);
+  border-radius: 2px;
+  background: rgba(201, 87, 44, 0.05);
+}
+
+.stamp-badge-wine {
+  border-color: var(--accent-deep-wine);
+  color: var(--accent-deep-wine);
+  background: rgba(99, 44, 50, 0.05);
+}
+
+.stamp-badge-gold {
+  border-color: var(--highlight-gold);
+  color: var(--text-charcoal);
+  background: rgba(215, 168, 75, 0.15);
+}
+
+/* Buttons */
+.btn-cinematic-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background-color: var(--accent-burnt-orange);
+  color: #FFF;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-cinematic);
+  border-radius: 2px;
+  box-shadow: 0 4px 14px rgba(201, 87, 44, 0.25);
+  text-decoration: none;
+}
+.btn-cinematic-primary:hover {
+  background-color: var(--accent-deep-wine);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(99, 44, 50, 0.3);
+}
+
+.btn-cinematic-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background-color: transparent;
+  color: var(--text-charcoal);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid var(--text-charcoal);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-cinematic);
+  border-radius: 2px;
+  text-decoration: none;
+}
+.btn-cinematic-secondary:hover {
+  background-color: var(--text-charcoal);
+  color: var(--bg-ivory);
+  transform: translateY(-2px);
+}
+
+.btn-cinematic-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: var(--accent-burnt-orange);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: gap 0.2s ease;
+  text-decoration: none;
+}
+.btn-cinematic-ghost:hover {
+  gap: 14px;
+  color: var(--accent-deep-wine);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s var(--ease-cinematic) forwards;
+}
+
+@keyframes floatSubtle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+.animate-float {
+  animation: floatSubtle 6s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.animate-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Accessible focus outlines */
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--accent-burnt-orange);
+  outline-offset: 3px;
+}
