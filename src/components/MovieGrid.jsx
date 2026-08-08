@@ -8,7 +8,6 @@ export default function MovieGrid({ movies, selectedMood, onSelectMovie }) {
 
   const genres = ['All', 'Sci-Fi', 'Drama', 'Comedy', 'Mystery', 'Adventure', 'Action'];
 
-  // Filter movies based on active genre tab & selected mood
   const filteredMovies = movies.filter(movie => {
     const matchesGenre = activeGenreFilter === 'All' || movie.genres.includes(activeGenreFilter);
     const matchesMood = !selectedMood || movie.moods.includes(selectedMood.id);
@@ -28,14 +27,12 @@ export default function MovieGrid({ movies, selectedMood, onSelectMovie }) {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          mdDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'flex-start',
           marginBottom: '32px'
         }}
       >
         <SectionTitle
-          number="02"
           badgeText="CURATED SELECTION"
           title="DISCOVER SOMETHING"
           subtitle={
@@ -55,8 +52,8 @@ export default function MovieGrid({ movies, selectedMood, onSelectMovie }) {
             marginTop: '8px'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginRight: '8px', color: '#746B63', fontSize: '0.8rem', fontWeight: 600 }}>
-            <SlidersHorizontal size={14} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginRight: '8px', color: 'var(--vyora-text-muted)', fontSize: '0.8rem', fontWeight: 600 }}>
+            <SlidersHorizontal size={14} color="var(--vyora-accent)" />
             <span>GENRE:</span>
           </div>
 
@@ -68,10 +65,10 @@ export default function MovieGrid({ movies, selectedMood, onSelectMovie }) {
                 onClick={() => setActiveGenreFilter(genre)}
                 style={{
                   padding: '6px 14px',
-                  borderRadius: '2px',
-                  border: isActive ? '1px solid #C9572C' : '1px solid rgba(116, 107, 99, 0.2)',
-                  backgroundColor: isActive ? '#C9572C' : '#EDE2D2',
-                  color: isActive ? '#FFF' : '#252322',
+                  borderRadius: '3px',
+                  border: isActive ? '1px solid var(--vyora-accent)' : '1px solid var(--vyora-border)',
+                  backgroundColor: isActive ? 'var(--vyora-accent)' : 'var(--vyora-bg-secondary)',
+                  color: isActive ? '#120A18' : 'var(--vyora-text)',
                   fontSize: '0.8rem',
                   fontWeight: 600,
                   cursor: 'pointer',
@@ -103,16 +100,16 @@ export default function MovieGrid({ movies, selectedMood, onSelectMovie }) {
           style={{
             padding: '60px 24px',
             textAlign: 'center',
-            backgroundColor: '#EDE2D2',
-            border: '1px dashed rgba(116, 107, 99, 0.3)',
-            borderRadius: '3px'
+            backgroundColor: 'var(--vyora-surface)',
+            border: '1px dashed var(--vyora-border-strong)',
+            borderRadius: '4px'
           }}
         >
-          <Sparkles size={32} color="#C9572C" style={{ marginBottom: '12px' }} />
-          <h3 className="font-editorial" style={{ fontSize: '1.4rem', color: '#252322', marginBottom: '8px' }}>
+          <Sparkles size={32} color="var(--vyora-accent)" style={{ marginBottom: '12px' }} />
+          <h3 className="font-editorial" style={{ fontSize: '1.4rem', color: 'var(--vyora-text)', marginBottom: '8px' }}>
             No movies match this filter combination.
           </h3>
-          <p style={{ fontSize: '0.9rem', color: '#746B63' }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--vyora-text-muted)' }}>
             Try selecting a different genre or clearing your active mood filter.
           </p>
         </div>

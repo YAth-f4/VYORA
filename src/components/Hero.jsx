@@ -12,16 +12,16 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
         overflow: 'hidden'
       }}
     >
-      {/* Decorative Background Elements */}
+      {/* Decorative Cosmic Light Glows */}
       <div
         style={{
           position: 'absolute',
           top: '20px',
           right: '5%',
-          width: '300px',
-          height: '300px',
+          width: '320px',
+          height: '320px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(215, 168, 75, 0.15) 0%, rgba(246, 240, 230, 0) 70%)',
+          background: 'radial-gradient(circle, rgba(231, 196, 106, 0.12) 0%, transparent 70%)',
           pointerEvents: 'none'
         }}
       />
@@ -30,10 +30,10 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
           position: 'absolute',
           bottom: '10px',
           left: '-50px',
-          width: '400px',
-          height: '400px',
+          width: '420px',
+          height: '420px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(201, 87, 44, 0.08) 0%, rgba(246, 240, 230, 0) 70%)',
+          background: 'radial-gradient(circle, rgba(168, 117, 255, 0.12) 0%, transparent 70%)',
           pointerEvents: 'none'
         }}
       />
@@ -56,23 +56,23 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
               gap: '10px',
               marginBottom: '24px',
               padding: '6px 14px',
-              backgroundColor: '#EDE2D2',
-              border: '1px solid rgba(116, 107, 99, 0.25)',
-              borderRadius: '2px'
+              backgroundColor: 'var(--vyora-bg-secondary)',
+              border: '1px solid var(--vyora-border-strong)',
+              borderRadius: '3px'
             }}
           >
             <span
               className="stamp-badge"
-              style={{ padding: '2px 6px', fontSize: '0.65rem' }}
+              style={{ padding: '2px 8px', fontSize: '0.65rem' }}
             >
-              ISSUE NO. 04
+              MULTIVERSE V1
             </span>
             <span
               style={{
                 fontSize: '0.8rem',
-                letterSpacing: '0.1em',
+                letterSpacing: '0.12em',
                 textTransform: 'uppercase',
-                color: '#746B63',
+                color: 'var(--vyora-text-muted)',
                 fontWeight: 600
               }}
             >
@@ -86,8 +86,8 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
             style={{
               fontSize: 'clamp(2.8rem, 6vw, 5.2rem)',
               lineHeight: 0.98,
-              letterSpacing: '-0.03em',
-              color: '#252322',
+              letterSpacing: '-0.02em',
+              color: 'var(--vyora-text)',
               marginBottom: '24px',
               textTransform: 'uppercase'
             }}
@@ -95,7 +95,7 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
             YOUR NEXT<br />
             <span
               style={{
-                color: '#C9572C',
+                color: 'var(--vyora-accent)',
                 fontStyle: 'italic',
                 fontWeight: 400
               }}
@@ -109,7 +109,7 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
           <p
             style={{
               fontSize: '1.2rem',
-              color: '#746B63',
+              color: 'var(--vyora-text-muted)',
               maxWidth: '520px',
               lineHeight: 1.6,
               marginBottom: '36px'
@@ -139,8 +139,8 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
               onClick={onSurpriseClick}
               className="btn-cinematic-secondary"
             >
-              <Dices size={18} color="#C9572C" />
-              <span>Surprise Me</span>
+              <Dices size={18} color="var(--vyora-accent)" />
+              <span>Vibe Drop</span>
             </button>
           </div>
 
@@ -152,32 +152,32 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
               alignItems: 'center',
               gap: '32px',
               paddingTop: '24px',
-              borderTop: '1px dashed rgba(116, 107, 99, 0.25)'
+              borderTop: '1px dashed var(--vyora-border-strong)'
             }}
           >
             <div>
-              <span style={{ display: 'block', fontSize: '1.4rem', fontWeight: 'bold', color: '#632C32', fontFamily: 'var(--font-editorial)' }}>
+              <span style={{ display: 'block', fontSize: '1.4rem', fontWeight: 'bold', color: 'var(--vyora-accent-secondary)', fontFamily: 'var(--font-display)' }}>
                 12,000+
               </span>
-              <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#746B63' }}>
+              <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--vyora-text-muted)' }}>
                 Curated Films
               </span>
             </div>
-            <div style={{ width: '1px', height: '28px', backgroundColor: 'rgba(116, 107, 99, 0.25)' }} />
+            <div style={{ width: '1px', height: '28px', backgroundColor: 'var(--vyora-border-strong)' }} />
             <div>
-              <span style={{ display: 'block', fontSize: '1.4rem', fontWeight: 'bold', color: '#C9572C', fontFamily: 'var(--font-editorial)' }}>
+              <span style={{ display: 'block', fontSize: '1.4rem', fontWeight: 'bold', color: 'var(--vyora-accent)', fontFamily: 'var(--font-display)' }}>
                 98.4%
               </span>
-              <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#746B63' }}>
+              <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--vyora-text-muted)' }}>
                 Vector Match Accuracy
               </span>
             </div>
-            <div style={{ width: '1px', height: '28px', backgroundColor: 'rgba(116, 107, 99, 0.25)' }} />
+            <div style={{ width: '1px', height: '28px', backgroundColor: 'var(--vyora-border-strong)' }} />
             <div>
-              <span style={{ display: 'block', fontSize: '1.4rem', fontWeight: 'bold', color: '#D7A84B', fontFamily: 'var(--font-editorial)' }}>
+              <span style={{ display: 'block', fontSize: '1.4rem', fontWeight: 'bold', color: 'var(--vyora-gold)', fontFamily: 'var(--font-display)' }}>
                 8 Moods
               </span>
-              <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#746B63' }}>
+              <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--vyora-text-muted)' }}>
                 Interactive Engine
               </span>
             </div>
@@ -204,9 +204,9 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
                 height: '400px',
                 borderRadius: '4px',
                 overflow: 'hidden',
-                boxShadow: '0 20px 40px rgba(37, 35, 34, 0.2)',
+                boxShadow: 'var(--shadow-lg)',
                 transform: 'rotate(-3deg) translateY(-10px)',
-                border: '4px solid #FAF6F0',
+                border: '3px solid var(--vyora-border-strong)',
                 transition: 'transform 0.5s var(--ease-cinematic)'
               }}
               className="animate-float"
@@ -220,21 +220,21 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(to top, rgba(37, 35, 34, 0.85) 0%, transparent 60%)',
+                  background: 'linear-gradient(to top, rgba(18, 10, 24, 0.9) 0%, transparent 60%)',
                   padding: '20px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'flex-end',
-                  color: '#FAF6F0'
+                  color: 'var(--vyora-text)'
                 }}
               >
                 <span className="stamp-badge-gold" style={{ alignSelf: 'flex-start', marginBottom: '8px' }}>
                   FEATURED PICK
                 </span>
-                <h3 className="font-editorial" style={{ fontSize: '1.4rem', color: '#FAF6F0' }}>
+                <h3 className="font-editorial" style={{ fontSize: '1.4rem', color: 'var(--vyora-text)' }}>
                   INTERSTELLAR
                 </h3>
-                <p style={{ fontSize: '0.8rem', color: '#D7A84B', margin: 0 }}>
+                <p style={{ fontSize: '0.8rem', color: 'var(--vyora-gold)', margin: 0 }}>
                   CHRISTOPHER NOLAN • 2014
                 </p>
               </div>
@@ -250,9 +250,9 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
                 height: '240px',
                 borderRadius: '3px',
                 overflow: 'hidden',
-                boxShadow: '0 15px 30px rgba(37, 35, 34, 0.15)',
+                boxShadow: 'var(--shadow-md)',
                 transform: 'rotate(6deg)',
-                border: '3px solid #FAF6F0',
+                border: '2px solid var(--vyora-border-strong)',
                 opacity: 0.95
               }}
             >
@@ -271,45 +271,23 @@ export default function Hero({ onDiscoverClick, onSurpriseClick }) {
                 bottom: '10px',
                 left: '-20px',
                 padding: '12px 20px',
-                boxShadow: '0 10px 25px rgba(37, 35, 34, 0.12)',
+                backgroundColor: 'var(--vyora-surface)',
+                border: '1px solid var(--vyora-border-strong)',
+                boxShadow: 'var(--shadow-md)',
                 transform: 'rotate(-2deg)'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <Star size={16} fill="#D7A84B" color="#D7A84B" />
+                <Star size={16} fill="var(--vyora-gold)" color="var(--vyora-gold)" />
                 <div>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#252322' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--vyora-text)' }}>
                     CRITICS' SELECTION
                   </span>
-                  <span style={{ display: 'block', fontSize: '0.7rem', color: '#746B63' }}>
+                  <span style={{ display: 'block', fontSize: '0.7rem', color: 'var(--vyora-text-muted)' }}>
                     Score: 9.4 / 10 Vector Rating
                   </span>
                 </div>
               </div>
-            </div>
-
-            {/* Decorative Film Strip Accent */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-15px',
-                left: '20px',
-                display: 'flex',
-                gap: '6px'
-              }}
-            >
-              {[1, 2, 3, 4].map(i => (
-                <div
-                  key={i}
-                  style={{
-                    width: '12px',
-                    height: '8px',
-                    backgroundColor: '#632C32',
-                    borderRadius: '1px',
-                    opacity: 0.6
-                  }}
-                />
-              ))}
             </div>
           </div>
         </div>

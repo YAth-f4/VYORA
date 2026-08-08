@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SectionTitle({ number, title, subtitle, badgeText, align = 'left' }) {
+export default function SectionTitle({ title, subtitle, badgeText, align = 'left' }) {
   return (
     <div
       style={{
@@ -24,25 +24,12 @@ export default function SectionTitle({ number, title, subtitle, badgeText, align
           flexWrap: 'wrap'
         }}
       >
-        {number && (
-          <span
-            className="font-italiana"
-            style={{
-              fontSize: '2.5rem',
-              color: '#C9572C',
-              opacity: 0.85,
-              lineHeight: 1
-            }}
-          >
-            {number}
-          </span>
-        )}
         <h2
           className="heading-editorial"
           style={{
             fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-            letterSpacing: '-0.02em',
-            color: '#252322',
+            letterSpacing: '-0.01em',
+            color: 'var(--vyora-text)',
             textTransform: 'uppercase'
           }}
         >
@@ -55,7 +42,7 @@ export default function SectionTitle({ number, title, subtitle, badgeText, align
           style={{
             marginTop: '10px',
             fontSize: '1.05rem',
-            color: '#746B63',
+            color: 'var(--vyora-text-muted)',
             maxWidth: '650px',
             margin: align === 'center' ? '10px auto 0 auto' : '10px 0 0 0'
           }}
@@ -64,14 +51,15 @@ export default function SectionTitle({ number, title, subtitle, badgeText, align
         </p>
       )}
 
-      {/* Decorative Warm Accent Bar */}
+      {/* Decorative Accent Bar */}
       <div
         style={{
           width: '60px',
           height: '2px',
-          backgroundColor: '#C9572C',
+          backgroundColor: 'var(--vyora-accent)',
           marginTop: '16px',
-          margin: align === 'center' ? '16px auto 0 auto' : '16px 0 0 0'
+          margin: align === 'center' ? '16px auto 0 auto' : '16px 0 0 0',
+          boxShadow: '0 0 10px var(--vyora-accent)'
         }}
       />
     </div>

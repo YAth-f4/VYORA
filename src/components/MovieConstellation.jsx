@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Compass, Sparkles, Orbit } from 'lucide-react';
+import { Orbit } from 'lucide-react';
 
 export default function MovieConstellation({ currentMovie, constellationData = [], onSelectConnectedMovie }) {
   const [hoveredNode, setHoveredNode] = useState(null);
 
   if (!currentMovie) return null;
 
-  // Orbit layout calculations for surrounding nodes
-  // Distance from center is inversely proportional to similarity (higher similarity = closer to center)
   const centerNode = {
     title: currentMovie.title,
     id: currentMovie.id,
@@ -17,7 +15,6 @@ export default function MovieConstellation({ currentMovie, constellationData = [
 
   const nodes = constellationData.map((item, idx) => {
     const angle = (idx / constellationData.length) * 2 * Math.PI - Math.PI / 2;
-    // Distance between 120px and 220px from center based on similarity (0.7 to 0.95)
     const distance = 220 - (item.similarity - 0.75) * 400;
     const x = Math.cos(angle) * Math.max(110, Math.min(220, distance));
     const y = Math.sin(angle) * Math.max(110, Math.min(220, distance));
@@ -33,12 +30,13 @@ export default function MovieConstellation({ currentMovie, constellationData = [
   return (
     <div
       style={{
-        backgroundColor: '#EDE2D2',
-        border: '1px solid rgba(116, 107, 99, 0.28)',
-        borderRadius: '3px',
+        backgroundColor: 'var(--vyora-surface)',
+        border: '1px solid var(--vyora-border-strong)',
+        borderRadius: '4px',
         padding: '32px 24px',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        boxShadow: 'var(--shadow-md)'
       }}
     >
       {/* Header */}
@@ -46,26 +44,26 @@ export default function MovieConstellation({ currentMovie, constellationData = [
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div
             style={{
-              width: '32px',
-              height: '32px',
-              backgroundColor: '#632C32',
-              color: '#FAF6F0',
+              width: '34px',
+              height: '34px',
+              backgroundColor: 'rgba(168, 117, 255, 0.15)',
+              color: 'var(--vyora-accent)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: '2px'
+              borderRadius: '3px'
             }}
           >
-            <Orbit size={18} />
+            <Orbit size={20} />
           </div>
           <div>
             <h3
               className="font-editorial"
-              style={{ fontSize: '1.3rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: '#252322', margin: 0 }}
+              style={{ fontSize: '1.35rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--vyora-text)', margin: 0 }}
             >
               MOVIE CONSTELLATION
             </h3>
-            <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#746B63' }}>
+            <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--vyora-text-muted)' }}>
               VECTOR SIMILARITY MAP
             </span>
           </div>
@@ -85,9 +83,9 @@ export default function MovieConstellation({ currentMovie, constellationData = [
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#FAF6F0',
-          border: '1px solid rgba(116, 107, 99, 0.2)',
-          borderRadius: '3px'
+          backgroundColor: 'var(--vyora-bg-secondary)',
+          border: '1px solid var(--vyora-border)',
+          borderRadius: '4px'
         }}
       >
         {/* Concentric Orbit Rings */}
@@ -100,10 +98,9 @@ export default function MovieConstellation({ currentMovie, constellationData = [
             pointerEvents: 'none'
           }}
         >
-          {/* Radial grid circles */}
-          <circle cx="50%" cy="50%" r="90" fill="none" stroke="rgba(116, 107, 99, 0.12)" strokeDasharray="4 4" />
-          <circle cx="50%" cy="50%" r="150" fill="none" stroke="rgba(116, 107, 99, 0.12)" strokeDasharray="4 4" />
-          <circle cx="50%" cy="50%" r="200" fill="none" stroke="rgba(116, 107, 99, 0.08)" strokeDasharray="2 2" />
+          <circle cx="50%" cy="50%" r="90" fill="none" stroke="var(--vyora-border)" strokeDasharray="4 4" />
+          <circle cx="50%" cy="50%" r="150" fill="none" stroke="var(--vyora-border)" strokeDasharray="4 4" />
+          <circle cx="50%" cy="50%" r="200" fill="none" stroke="var(--vyora-border)" strokeDasharray="2 2" opacity="0.6" />
 
           {/* Connection Lines from Center to Surrounding Nodes */}
           {nodes.map(node => {
@@ -115,7 +112,7 @@ export default function MovieConstellation({ currentMovie, constellationData = [
                 y1="50%"
                 x2={`calc(50% + ${node.x}px)`}
                 y2={`calc(50% + ${node.y}px)`}
-                stroke={isHighlighted ? '#C9572C' : 'rgba(116, 107, 99, 0.3)'}
+                stroke={isHighlighted ? 'var(--vyora-accent)' : 'var(--vyora-border)'}
                 strokeWidth={isHighlighted ? '2.5' : '1.5'}
                 strokeDasharray={isHighlighted ? 'none' : '3 3'}
                 style={{ transition: 'all 0.3s ease' }}
@@ -141,8 +138,8 @@ export default function MovieConstellation({ currentMovie, constellationData = [
               height: '84px',
               borderRadius: '50%',
               padding: '3px',
-              background: 'linear-gradient(135deg, #C9572C 0%, #D7A84B 100%)',
-              boxShadow: '0 0 24px rgba(201, 87, 44, 0.35)',
+              background: 'linear-gradient(135deg, var(--vyora-accent) 0%, var(--vyora-gold) 100%)',
+              boxShadow: 'var(--vyora-glow)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -154,7 +151,7 @@ export default function MovieConstellation({ currentMovie, constellationData = [
                 height: '100%',
                 borderRadius: '50%',
                 overflow: 'hidden',
-                border: '2px solid #FAF6F0'
+                border: '2px solid var(--vyora-bg)'
               }}
             >
               <img
@@ -168,18 +165,19 @@ export default function MovieConstellation({ currentMovie, constellationData = [
           <div
             style={{
               marginTop: '8px',
-              backgroundColor: '#252322',
-              color: '#FAF6F0',
+              backgroundColor: 'var(--vyora-surface)',
+              border: '1px solid var(--vyora-border-strong)',
+              color: 'var(--vyora-text)',
               padding: '4px 10px',
-              borderRadius: '2px',
+              borderRadius: '3px',
               fontSize: '0.78rem',
               fontWeight: 700,
               letterSpacing: '0.05em',
               textAlign: 'center',
-              boxShadow: '0 4px 12px rgba(37, 35, 34, 0.2)'
+              boxShadow: 'var(--shadow-sm)'
             }}
           >
-            <span style={{ color: '#D7A84B' }}>★ </span>
+            <span style={{ color: 'var(--vyora-gold)' }}>★ </span>
             {centerNode.title.toUpperCase()}
           </div>
         </div>
@@ -212,13 +210,13 @@ export default function MovieConstellation({ currentMovie, constellationData = [
                   width: isHovered ? '48px' : '36px',
                   height: isHovered ? '48px' : '36px',
                   borderRadius: '50%',
-                  backgroundColor: isHovered ? '#C9572C' : '#632C32',
-                  color: '#FAF6F0',
-                  border: isHovered ? '2px solid #D7A84B' : '2px solid #FAF6F0',
+                  backgroundColor: isHovered ? 'var(--vyora-accent)' : 'var(--vyora-surface)',
+                  color: isHovered ? '#120A18' : 'var(--vyora-text)',
+                  border: isHovered ? '2px solid var(--vyora-gold)' : '2px solid var(--vyora-border-strong)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: isHovered ? '0 6px 16px rgba(201, 87, 44, 0.4)' : '0 3px 8px rgba(37, 35, 34, 0.15)',
+                  boxShadow: isHovered ? 'var(--vyora-glow)' : 'var(--shadow-sm)',
                   fontSize: '0.75rem',
                   fontWeight: 'bold'
                 }}
@@ -230,15 +228,16 @@ export default function MovieConstellation({ currentMovie, constellationData = [
               <div
                 style={{
                   marginTop: '6px',
-                  backgroundColor: isHovered ? '#C9572C' : 'rgba(37, 35, 34, 0.85)',
-                  color: '#FAF6F0',
+                  backgroundColor: isHovered ? 'var(--vyora-accent)' : 'var(--vyora-surface)',
+                  color: isHovered ? '#120A18' : 'var(--vyora-text)',
                   padding: '3px 8px',
                   borderRadius: '2px',
                   fontSize: '0.72rem',
                   fontWeight: 600,
                   whiteSpace: 'nowrap',
-                  boxShadow: '0 2px 6px rgba(37, 35, 34, 0.15)',
-                  transition: 'all 0.2s ease'
+                  boxShadow: 'var(--shadow-sm)',
+                  transition: 'all 0.2s ease',
+                  border: '1px solid var(--vyora-border)'
                 }}
               >
                 {node.title}
@@ -249,7 +248,7 @@ export default function MovieConstellation({ currentMovie, constellationData = [
       </div>
 
       {/* Footer Helper Text */}
-      <p style={{ fontSize: '0.8rem', color: '#746B63', marginTop: '12px', textAlign: 'center', margin: '12px 0 0 0' }}>
+      <p style={{ fontSize: '0.8rem', color: 'var(--vyora-text-muted)', marginTop: '12px', textAlign: 'center', margin: '12px 0 0 0' }}>
         Hover over nodes to inspect similarity vectors. Click any node to navigate and recalibrate the constellation.
       </p>
     </div>

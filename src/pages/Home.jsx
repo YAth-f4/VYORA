@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import Hero from '../components/Hero';
 import MoodSelector from '../components/MoodSelector';
+import VibeMixer from '../components/VibeMixer';
 import MovieGrid from '../components/MovieGrid';
-import MovieRoulette from '../components/MovieRoulette';
-import MovieConstellation from '../components/MovieConstellation';
+import VibeDrop from '../components/VibeDrop';
+import SharedVibes from '../components/SharedVibes';
 import SectionTitle from '../components/SectionTitle';
-import { getMovies, getMoods } from '../services/api';
+import { getMovies, getMoods, getSharedVibes } from '../services/api';
+import { Sparkles, SlidersHorizontal, Users } from 'lucide-react';
 
 export default function Home({ onSelectMovie }) {
   const [movies, setMovies] = useState([]);
   const [moods, setMoods] = useState([]);
   const [selectedMood, setSelectedMood] = useState(null);
+  const [sharedVibeData, setSharedVibeData] = useState(null);
+  const [showMixer, setShowMixer] = useState(false);
 
   useEffect(() => {
     async function loadData() {
       const allMovies = await getMovies();
       const allMoods = await getMoods();
+      const shared = await getSharedVibes('aarav-sci-fi');
       setMovies(allMovies);
       setMoods(allMoods);
+      setSharedVibeData(shared);
     }
     loadData();
   }, []);
@@ -27,8 +32,7 @@ export default function Home({ onSelectMovie }) {
       setSelectedMood(null);
     } else {
       setSelectedMood(mood);
-      // Smooth scroll to movie discovery section
-      const el = document.getElementById('movie-discovery');
+      const el = document.getElementById('recommendations');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
   };
@@ -37,28 +41,50 @@ export default function Home({ onSelectMovie }) {
     setSelectedMood(null);
   };
 
-  const scrollToMoods = () => {
-    const el = document.getElementById('mood-discovery');
+  const handleMixVibe = async (mixDimensions) => {
+    const sorted = await getMovies({ sortBy: 'match' });
+    setMovies(sorted);
+    const el = document.getElementById('recommendations');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
-
-  const scrollToRoulette = () => {
-    const el = document.getElementById('roulette');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  // Featured spotlight movie for constellation demo
-  const spotlightMovie = movies.find(m => m.id === 'interstellar-2014') || movies[0];
 
   return (
-    <main>
-      {/* 1. Hero */}
-      <Hero
-        onDiscoverClick={scrollToMoods}
-        onSurpriseClick={scrollToRoulette}
-      />
+    <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 24px 80px 24px' }}>
+      {/* Top Banner Header */}
+      <div style={{ marginBottom: '48px', textAlign: 'center' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '4px 12px', backgroundColor: 'var(--bg-sand)', borderRadius: '2px', marginBottom: '12px' }}>
+          <Sparkles size={16} color="var(--accent-burnt-orange)" />
+          <span style={{ fontSize: '0.75rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--accent-burnt-orange)', fontWeight: 'bold' }}>
+            🎬 REEL VIBE MOVIE DISCOVERY
+          </span>
+        </div>
+        <h1 className="heading-editorial" style={{ fontSize: 'clamp(2.5rem, 5vw, 4.2rem)', color: 'var(--text-charcoal)', marginBottom: '8px' }}>
+          WHAT'S YOUR VIBE TODAY?
+        </h1>
+        <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto 24px auto' }}>
+          Select an emotional state or fine-tune sensory dimensions to generate personalized film recommendations.
+        </p>
 
-      {/* 2. Mood Discovery */}
+        {/* Toggle Vibe Mixer button */}
+        <button
+          type="button"
+          onClick={() => setShowMixer(!showMixer)}
+          className="btn-cinematic-secondary"
+          style={{ fontSize: '0.85rem', padding: '8px 18px' }}
+        >
+          <SlidersHorizontal size={15} />
+          <span>{showMixer ? "HIDE VIBE MIXER" : "OPEN VIBE MIXER SLIDERS"}</span>
+        </button>
+      </div>
+
+      {/* 1. Vibe Mixer (Optional) */}
+      {showMixer && (
+        <div className="animate-fade-in">
+          <VibeMixer onMixVibe={handleMixVibe} />
+        </div>
+      )}
+
+      {/* 2. Mood Selector */}
       <MoodSelector
         moods={moods}
         selectedMood={selectedMood}
@@ -66,45 +92,38 @@ export default function Home({ onSelectMovie }) {
         onResetMood={handleResetMood}
       />
 
-      {/* 3. Movie Discovery Section */}
-      <MovieGrid
-        movies={movies}
-        selectedMood={selectedMood}
-        onSelectMovie={onSelectMovie}
-      />
+      {/* 3. Editorial Recommendation Matches */}
+      <section id="recommendations" style={{ marginBottom: '60px' }}>
+        <SectionTitle
+          badgeText="YOUR VIBE MATCHES"
+          title="RECOMMENDED FOR YOUR MOOD"
+          subtitle="Editorial film cards complete with vector match percentages, atmosphere tags, and VYORA'S TAKE."
+        />
 
-      {/* 4. Movie Roulette */}
-      <MovieRoulette
-        movies={movies}
-        onSelectMovie={onSelectMovie}
-      />
+        <MovieGrid
+          movies={movies}
+          selectedMood={selectedMood}
+          onSelectMovie={onSelectMovie}
+        />
+      </section>
 
-      {/* 5. Interactive Constellation Spotlight Section */}
-      {spotlightMovie && (
-        <section
-          style={{
-            maxWidth: '1280px',
-            margin: '0 auto',
-            padding: '60px 24px 80px 24px'
-          }}
-        >
-          <SectionTitle
-            number="03"
-            badgeText="VECTOR MAP FEATURE"
-            title="EXPLORE THE CONSTELLATION"
-            subtitle="Discover movies grouped by atmospheric similarity, directorial resonance, and genre overlap."
-          />
+      {/* 4. Vibe Drop */}
+      <VibeDrop movies={movies} onSelectMovie={onSelectMovie} />
 
-          <MovieConstellation
-            currentMovie={spotlightMovie}
-            constellationData={spotlightMovie.constellation}
-            onSelectConnectedMovie={(id) => {
-              const target = movies.find(m => m.id === id);
-              if (target) onSelectMovie(target);
-            }}
-          />
-        </section>
-      )}
+      {/* 5. Vibe Exchange Preview */}
+      <section style={{ marginTop: '60px' }}>
+        <SectionTitle
+          badgeText="VIBE EXCHANGE"
+          title="RECOMMENDED FROM YOUR CIRCLE"
+          subtitle="Discover films recommended through collaborative taste matching with people in your Vibe Circle."
+        />
+
+        <SharedVibes
+          sharedData={sharedVibeData}
+          movies={movies}
+          onSelectMovie={onSelectMovie}
+        />
+      </section>
     </main>
   );
 }

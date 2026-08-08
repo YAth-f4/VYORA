@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dna, Sparkles, Sliders } from 'lucide-react';
+import { Dna, Sparkles } from 'lucide-react';
 
 export default function MovieDNA({ movie }) {
   if (!movie || !movie.dna) return null;
@@ -9,11 +9,11 @@ export default function MovieDNA({ movie }) {
   return (
     <div
       style={{
-        backgroundColor: '#FAF6F0',
-        border: '1px solid rgba(116, 107, 99, 0.22)',
-        borderRadius: '3px',
+        backgroundColor: 'var(--vyora-surface)',
+        border: '1px solid var(--vyora-border-strong)',
+        borderRadius: '4px',
         padding: '28px',
-        boxShadow: '0 6px 20px rgba(37, 35, 34, 0.05)'
+        boxShadow: 'var(--shadow-sm)'
       }}
     >
       {/* Header */}
@@ -21,14 +21,14 @@ export default function MovieDNA({ movie }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div
             style={{
-              width: '32px',
-              height: '32px',
-              backgroundColor: 'rgba(201, 87, 44, 0.1)',
-              color: '#C9572C',
+              width: '34px',
+              height: '34px',
+              backgroundColor: 'rgba(168, 117, 255, 0.15)',
+              color: 'var(--vyora-accent)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: '2px'
+              borderRadius: '3px'
             }}
           >
             <Dna size={18} />
@@ -36,11 +36,11 @@ export default function MovieDNA({ movie }) {
           <div>
             <h3
               className="font-editorial"
-              style={{ fontSize: '1.3rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: '#252322', margin: 0 }}
+              style={{ fontSize: '1.35rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--vyora-text)', margin: 0 }}
             >
               MOVIE DNA
             </h3>
-            <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#746B63' }}>
+            <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--vyora-text-muted)' }}>
               VECTOR ATTRIBUTE BREAKDOWN
             </span>
           </div>
@@ -55,29 +55,30 @@ export default function MovieDNA({ movie }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '28px' }}>
         {metrics.map(metric => (
           <div key={metric.label}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 600, color: '#252322', marginBottom: '6px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 600, color: 'var(--vyora-text)', marginBottom: '6px' }}>
               <span>{metric.label}</span>
-              <span style={{ color: '#C9572C', fontFamily: 'var(--font-editorial)', fontWeight: 'bold' }}>
+              <span style={{ color: 'var(--vyora-accent)', fontFamily: 'var(--font-display)', fontWeight: 'bold' }}>
                 {metric.value}%
               </span>
             </div>
 
-            {/* Custom Bar Meter */}
+            {/* Custom Meter */}
             <div
               style={{
                 width: '100%',
                 height: '8px',
-                backgroundColor: '#EDE2D2',
+                backgroundColor: 'var(--vyora-bg-secondary)',
                 borderRadius: '2px',
                 overflow: 'hidden',
-                position: 'relative'
+                position: 'relative',
+                border: '1px solid var(--vyora-border)'
               }}
             >
               <div
                 style={{
                   width: `${metric.value}%`,
                   height: '100%',
-                  background: 'linear-gradient(to right, #C9572C, #E9896A)',
+                  background: 'linear-gradient(to right, var(--vyora-accent), var(--vyora-accent-secondary))',
                   borderRadius: '2px',
                   transition: 'width 0.8s ease'
                 }}
@@ -95,7 +96,7 @@ export default function MovieDNA({ movie }) {
             fontWeight: 700,
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
-            color: '#746B63',
+            color: 'var(--vyora-text-muted)',
             display: 'block',
             marginBottom: '12px'
           }}
@@ -110,9 +111,9 @@ export default function MovieDNA({ movie }) {
               style={{
                 fontSize: '0.78rem',
                 fontWeight: 600,
-                color: '#632C32',
-                backgroundColor: 'rgba(99, 44, 50, 0.08)',
-                border: '1px solid rgba(99, 44, 50, 0.18)',
+                color: 'var(--vyora-accent-secondary)',
+                backgroundColor: 'rgba(228, 107, 168, 0.1)',
+                border: '1px solid rgba(228, 107, 168, 0.25)',
                 padding: '4px 10px',
                 borderRadius: '2px',
                 display: 'inline-flex',
@@ -120,7 +121,7 @@ export default function MovieDNA({ movie }) {
                 gap: '4px'
               }}
             >
-              <Sparkles size={11} color="#C9572C" />
+              <Sparkles size={11} color="var(--vyora-accent)" />
               {tag}
             </span>
           ))}

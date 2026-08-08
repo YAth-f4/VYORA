@@ -2,21 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import LandingPage from './pages/LandingPage';
 import Home from './pages/Home';
-import Explore from './pages/Explore';
+import VibeLibraryPage from './pages/VibeLibraryPage';
+import VibeCirclePage from './pages/VibeCirclePage';
+import PublicProfilePage from './pages/PublicProfilePage';
 import MovieDetails from './pages/MovieDetails';
 import MyUniverse from './pages/MyUniverse';
 import MovieDetailsModal from './components/MovieDetailsModal';
-import { searchMovies, MOVIES } from './services/api';
+import AuthPromptModal from './components/AuthPromptModal';
+import { MOVIES } from './services/api';
 import { Search, X, Star } from 'lucide-react';
 
 export default function App() {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('vyora_theme') || 'night';
+  });
+
   const [activeModalMovie, setActiveModalMovie] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-  // Handle live search in search modal
+  // Apply theme to document attribute
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('vyora_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'day' ? 'night' : 'day'));
+  };
+
+  // Live search in modal
   useEffect(() => {
     if (!searchQuery.trim()) {
       setSearchResults([]);
@@ -45,9 +64,16 @@ export default function App() {
 
   return (
     <Router>
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#F6F0E6' }}>
+      <div
+        className={theme === 'night' ? 'theme-night' : 'theme-day'}
+        style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-main)', color: 'var(--text-charcoal)', transition: 'background-color 0.4s ease, color 0.4s ease' }}
+      >
         {/* Navigation Bar */}
-        <Navbar onOpenSearch={() => setIsSearchOpen(true)} />
+        <Navbar
+          onOpenSearch={() => setIsSearchOpen(true)}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+        />
 
         {/* Quick Search Overlay Modal */}
         {isSearchOpen && (
@@ -56,8 +82,8 @@ export default function App() {
               position: 'fixed',
               inset: 0,
               zIndex: 3000,
-              backgroundColor: 'rgba(37, 35, 34, 0.75)',
-              backdropFilter: 'blur(4px)',
+              backgroundColor: 'rgba(24, 13, 26, 0.75)',
+              backdropFilter: 'blur(6px)',
               display: 'flex',
               alignItems: 'flex-start',
               justifyContent: 'center',
@@ -70,20 +96,20 @@ export default function App() {
               style={{
                 width: '100%',
                 maxWidth: '640px',
-                backgroundColor: '#FAF6F0',
-                border: '1px solid rgba(116, 107, 99, 0.3)',
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border-medium)',
                 borderRadius: '4px',
                 padding: '24px',
-                boxShadow: '0 20px 50px rgba(37, 35, 34, 0.25)'
+                boxShadow: 'var(--shadow-lg)'
               }}
               className="animate-fade-in"
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexGrow: 1 }}>
-                  <Search size={20} color="#C9572C" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexGrow: 1 }}>
+                  <Search size={20} color="var(--accent-burnt-orange)" />
                   <input
                     type="text"
-                    placeholder="Search movie title, director, or genre..."
+                    placeholder="Search your next obsession..."
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                     autoFocus
@@ -94,19 +120,19 @@ export default function App() {
                       backgroundColor: 'transparent',
                       fontSize: '1.1rem',
                       fontFamily: 'var(--font-sans)',
-                      color: '#252322'
+                      color: 'var(--text-charcoal)'
                     }}
                   />
                 </div>
                 <button
                   onClick={() => setIsSearchOpen(false)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#746B63' }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}
                 >
                   <X size={20} />
                 </button>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(116, 107, 99, 0.2)', paddingTop: '16px' }}>
+              <div style={{ borderTop: '1px solid var(--border-light)', paddingTop: '16px' }}>
                 {searchResults.length > 0 ? (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '360px', overflowY: 'auto' }}>
                     {searchResults.map(movie => (
@@ -118,8 +144,8 @@ export default function App() {
                           alignItems: 'center',
                           gap: '14px',
                           padding: '10px',
-                          backgroundColor: '#EDE2D2',
-                          borderRadius: '2px',
+                          backgroundColor: 'var(--bg-sand)',
+                          borderRadius: '3px',
                           cursor: 'pointer',
                           transition: 'background 0.2s ease'
                         }}
@@ -130,26 +156,26 @@ export default function App() {
                           style={{ width: '40px', height: '56px', objectFit: 'cover', borderRadius: '2px' }}
                         />
                         <div style={{ flexGrow: 1 }}>
-                          <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#252322', display: 'block' }}>
+                          <span style={{ fontSize: '1rem', fontWeight: 'bold', color: 'var(--text-charcoal)', display: 'block' }}>
                             {movie.title} ({movie.year})
                           </span>
-                          <span style={{ fontSize: '0.78rem', color: '#746B63' }}>
-                            {movie.director} • {movie.genres.join(', ')}
+                          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                            {movie.director} • {movie.genres?.join(', ')}
                           </span>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#D7A84B' }}>
-                          <Star size={14} fill="#D7A84B" />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--highlight-gold)' }}>
+                          <Star size={14} fill="var(--highlight-gold)" />
                           <span style={{ fontSize: '0.85rem', fontWeight: 'bold' }}>{movie.rating}</span>
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : searchQuery ? (
-                  <p style={{ fontSize: '0.9rem', color: '#746B63', margin: 0, textAlign: 'center', padding: '20px' }}>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', margin: 0, textAlign: 'center', padding: '20px' }}>
                     No films found matching "{searchQuery}".
                   </p>
                 ) : (
-                  <p style={{ fontSize: '0.85rem', color: '#746B63', margin: 0, textAlign: 'center', padding: '12px' }}>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0, textAlign: 'center', padding: '12px' }}>
                     Type a query to search vector film archives.
                   </p>
                 )}
@@ -161,8 +187,11 @@ export default function App() {
         {/* Router Views */}
         <div style={{ flexGrow: 1 }}>
           <Routes>
-            <Route path="/" element={<Home onSelectMovie={handleSelectMovie} />} />
-            <Route path="/explore" element={<Explore onSelectMovie={handleSelectMovie} />} />
+            <Route path="/" element={<LandingPage onSignIn={() => setIsAuthModalOpen(true)} />} />
+            <Route path="/movie-home" element={<Home onSelectMovie={handleSelectMovie} />} />
+            <Route path="/library" element={<VibeLibraryPage onSelectMovie={handleSelectMovie} />} />
+            <Route path="/circle" element={<VibeCirclePage onSelectMovie={handleSelectMovie} />} />
+            <Route path="/user/:id" element={<PublicProfilePage onSelectMovie={handleSelectMovie} />} />
             <Route path="/movie/:id" element={<MovieDetails onSelectMovie={handleSelectMovie} />} />
             <Route path="/universe" element={<MyUniverse onSelectMovie={handleSelectMovie} />} />
           </Routes>
@@ -176,6 +205,12 @@ export default function App() {
             onSelectConnectedMovie={handleSelectConnectedMovie}
           />
         )}
+
+        {/* Auth Prompt Modal */}
+        <AuthPromptModal
+          isOpen={isAuthModalOpen}
+          onClose={() => setIsAuthModalOpen(false)}
+        />
 
         {/* Footer */}
         <Footer />

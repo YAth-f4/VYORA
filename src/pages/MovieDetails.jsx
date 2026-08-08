@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getMovieById, MOVIES } from '../services/api';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getMovieById, MOVIES, rateMovie, toggleWatchlist } from '../services/api';
 import MovieDNA from '../components/MovieDNA';
 import RecommendationExplanation from '../components/RecommendationExplanation';
 import MovieConstellation from '../components/MovieConstellation';
-import { Star, Bookmark, CheckCircle, ArrowLeft, Share2, Film } from 'lucide-react';
+import WatchPlatforms from '../components/WatchPlatforms';
+import { Star, Bookmark, CheckCircle, ArrowLeft, Heart, Users, Sparkles } from 'lucide-react';
 
 export default function MovieDetails({ onSelectMovie }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
+  const [userRating, setUserRating] = useState(0);
+  const [inWatchlist, setInWatchlist] = useState(false);
+  const [isWatched, setIsWatched] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -24,6 +28,16 @@ export default function MovieDetails({ onSelectMovie }) {
   }, [id]);
 
   if (!movie) return null;
+
+  const handleRate = async (score) => {
+    setUserRating(score);
+    await rateMovie(movie.id, score);
+  };
+
+  const handleToggleWatchlist = async () => {
+    setInWatchlist(!inWatchlist);
+    await toggleWatchlist(movie.id);
+  };
 
   return (
     <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 24px 80px 24px' }}>
@@ -40,9 +54,9 @@ export default function MovieDetails({ onSelectMovie }) {
       {/* Hero Banner Header */}
       <div
         style={{
-          backgroundColor: '#EDE2D2',
-          border: '1px solid rgba(116, 107, 99, 0.28)',
-          borderRadius: '3px',
+          backgroundColor: 'var(--bg-card)',
+          border: '1px solid var(--border-medium)',
+          borderRadius: '4px',
           padding: '36px',
           marginBottom: '36px',
           display: 'grid',
@@ -57,49 +71,89 @@ export default function MovieDetails({ onSelectMovie }) {
             alt={movie.title}
             style={{
               width: '100%',
-              borderRadius: '3px',
-              border: '4px solid #FAF6F0',
-              boxShadow: '0 12px 28px rgba(37, 35, 34, 0.18)'
+              borderRadius: '4px',
+              border: '4px solid var(--bg-sand)',
+              boxShadow: 'var(--shadow-lg)'
             }}
           />
         </div>
 
         <div style={{ gridColumn: 'span 8' }}>
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+          {/* Badges */}
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
             <span className="stamp-badge-gold">{movie.year}</span>
-            {movie.genres.map(g => (
+            {movie.genres?.map(g => (
               <span key={g} className="stamp-badge">{g}</span>
             ))}
+            {movie.subVibe && (
+              <span className="stamp-badge-wine">{movie.subVibe}</span>
+            )}
           </div>
 
-          <h1 className="heading-editorial" style={{ fontSize: 'clamp(2.5rem, 4vw, 3.8rem)', color: '#252322', marginBottom: '8px' }}>
+          <h1 className="heading-editorial" style={{ fontSize: 'clamp(2.5rem, 4vw, 3.8rem)', color: 'var(--text-charcoal)', marginBottom: '8px' }}>
             {movie.title}
           </h1>
 
-          <p style={{ fontSize: '1.1rem', color: '#632C32', fontWeight: 600, marginBottom: '16px' }}>
-            Directed by {movie.director} • {movie.runtime} • Rating: <Star size={16} fill="#D7A84B" color="#D7A84B" style={{ display: 'inline' }} /> {movie.rating} / 10
+          <p style={{ fontSize: '1.05rem', color: 'var(--accent-deep-wine)', fontWeight: 600, marginBottom: '16px' }}>
+            Directed by {movie.director} • {movie.runtime} • Rating: <Star size={16} fill="var(--highlight-gold)" color="var(--highlight-gold)" style={{ display: 'inline' }} /> {movie.rating} / 10
           </p>
 
           {movie.tagline && (
-            <p style={{ fontSize: '1.1rem', fontStyle: 'italic', color: '#C9572C', fontFamily: 'var(--font-editorial)', marginBottom: '16px' }}>
+            <p style={{ fontSize: '1.1rem', fontStyle: 'italic', color: 'var(--accent-burnt-orange)', fontFamily: 'var(--font-editorial)', marginBottom: '16px' }}>
               "{movie.tagline}"
             </p>
           )}
 
-          <p style={{ fontSize: '1rem', color: '#746B63', lineHeight: 1.6, marginBottom: '24px' }}>
+          <p style={{ fontSize: '1rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '24px' }}>
             {movie.description}
           </p>
 
-          <div style={{ display: 'flex', gap: '16px' }}>
-            <button className="btn-cinematic-primary">
+          {/* Social Circle Insight Callout */}
+          <div style={{ padding: '12px 16px', backgroundColor: 'var(--bg-sand)', borderLeft: '3px solid var(--highlight-gold)', borderRadius: '2px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Users size={18} color="var(--accent-burnt-orange)" />
+            <span style={{ fontSize: '0.88rem', color: 'var(--text-charcoal)' }}>
+              <strong>Vibe Circle Insight:</strong> Diya and Aarav in your Vibe Circle gave this film top vector scores.
+            </span>
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+            <button
+              onClick={handleToggleWatchlist}
+              className={inWatchlist ? 'btn-cinematic-secondary' : 'btn-cinematic-primary'}
+            >
               <Bookmark size={18} />
-              <span>SAVE TO MY UNIVERSE</span>
+              <span>{inWatchlist ? "IN WATCHLIST" : "ADD TO WATCHLIST"}</span>
             </button>
+
+            <button
+              onClick={() => setIsWatched(!isWatched)}
+              className="btn-cinematic-secondary"
+            >
+              <CheckCircle size={18} color={isWatched ? "var(--accent-burnt-orange)" : "currentColor"} />
+              <span>{isWatched ? "WATCHED" : "MARK AS WATCHED"}</span>
+            </button>
+
+            {/* Interactive Rating */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '10px 16px', backgroundColor: 'var(--bg-sand)', borderRadius: '2px', border: '1px solid var(--border-medium)' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-muted)', marginRight: '6px' }}>
+                YOUR RATING:
+              </span>
+              {[1, 2, 3, 4, 5].map(star => (
+                <button
+                  key={star}
+                  onClick={() => handleRate(star)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px' }}
+                >
+                  <Star size={18} fill={userRating >= star ? "var(--highlight-gold)" : "none"} color="var(--highlight-gold)" />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Grid: DNA + Recommendation Logic */}
+      {/* Grid: DNA + VYORA'S TAKE */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '28px', marginBottom: '40px' }}>
         <div style={{ gridColumn: 'span 6' }}>
           <MovieDNA movie={movie} />
@@ -108,6 +162,11 @@ export default function MovieDetails({ onSelectMovie }) {
         <div style={{ gridColumn: 'span 6' }}>
           <RecommendationExplanation movie={movie} />
         </div>
+      </div>
+
+      {/* Where to Watch */}
+      <div style={{ marginBottom: '40px' }}>
+        <WatchPlatforms platforms={movie.whereToWatch} />
       </div>
 
       {/* Interactive Constellation */}

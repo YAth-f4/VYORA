@@ -1,112 +1,98 @@
 import React from 'react';
-import { HelpCircle, CheckCircle2, Film, Compass, Sparkles } from 'lucide-react';
+import { Sparkles, CheckCircle2, Tag, ShieldCheck } from 'lucide-react';
 
 export default function RecommendationExplanation({ movie }) {
-  if (!movie || !movie.recommendationReason) return null;
+  if (!movie) return null;
 
-  const { similarityScore, vectorMatch, anchorMovies, reasons } = movie.recommendationReason;
+  const matchScore = movie.vibeMatchScore || movie.recommendationReason?.similarityScore || 88;
+  const reasoning = movie.recommendationReason;
+  const vyorasTake = movie.vyorasTake || "VYORA decoded your taste vectors and selected this film for its distinctive atmospheric resonance and pacing.";
+
+  const reasonsList = reasoning?.reasons || [
+    "High match with your selected mood filter",
+    "Similar narrative structure to films in your history",
+    "Strong thematic overlap in vector space",
+    "Popular among cinephiles in your Vibe Circle"
+  ];
 
   return (
     <div
       style={{
-        backgroundColor: '#EDE2D2',
-        border: '1px solid rgba(116, 107, 99, 0.28)',
-        borderRadius: '3px',
         padding: '28px',
-        position: 'relative'
+        backgroundColor: 'var(--vyora-surface)',
+        border: '1px solid var(--vyora-border-strong)',
+        borderRadius: '4px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        boxShadow: 'var(--shadow-sm)'
       }}
     >
-      {/* Stamp Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <HelpCircle size={18} color="#C9572C" />
-          <h3
-            className="font-editorial"
-            style={{ fontSize: '1.25rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: '#252322', margin: 0 }}
-          >
-            WHY WE THINK YOU'LL LIKE THIS
-          </h3>
-        </div>
-
-        {/* Overall Match Badge */}
-        <div
-          style={{
-            backgroundColor: '#C9572C',
-            color: '#FFF',
-            padding: '4px 10px',
-            borderRadius: '2px',
-            fontSize: '0.8rem',
-            fontWeight: 700,
-            letterSpacing: '0.05em'
-          }}
-        >
-          {similarityScore}% MATCH
-        </div>
-      </div>
-
-      {/* Primary Match Statement */}
-      <p style={{ fontSize: '0.92rem', color: '#252322', fontStyle: 'italic', marginBottom: '20px', lineHeight: 1.5 }}>
-        "{vectorMatch}"
-      </p>
-
-      {/* Key Reasons List */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
-        {reasons.map((reason, idx) => (
-          <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-            <CheckCircle2 size={16} color="#C9572C" style={{ marginTop: '2px', flexShrink: 0 }} />
-            <span style={{ fontSize: '0.85rem', color: '#746B63', lineHeight: 1.4 }}>
-              {reason}
-            </span>
+      <div>
+        {/* Header with Match Indicator */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Sparkles size={18} color="var(--vyora-accent)" />
+            <h3 className="font-display" style={{ fontSize: '1.4rem', color: 'var(--vyora-text)', textTransform: 'uppercase', margin: 0 }}>
+              ✦ VYORA'S TAKE
+            </h3>
           </div>
-        ))}
-      </div>
 
-      {/* Anchor Movies ("Recommended because you liked...") */}
-      {anchorMovies && anchorMovies.length > 0 && (
-        <div
-          style={{
-            borderTop: '1px dashed rgba(116, 107, 99, 0.3)',
-            paddingTop: '16px'
-          }}
-        >
-          <span
+          {/* Match Score Badge */}
+          <div
             style={{
-              fontSize: '0.72rem',
-              fontWeight: 700,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: '#632C32',
-              display: 'block',
-              marginBottom: '10px'
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 14px',
+              backgroundColor: 'rgba(168, 117, 255, 0.12)',
+              border: '1px solid var(--vyora-accent)',
+              borderRadius: '3px'
             }}
           >
-            RECOMMENDED BECAUSE YOU LIKED
-          </span>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {anchorMovies.map(anchor => (
-              <span
-                key={anchor}
-                style={{
-                  fontSize: '0.8rem',
-                  fontWeight: 600,
-                  backgroundColor: '#FAF6F0',
-                  color: '#252322',
-                  border: '1px solid rgba(116, 107, 99, 0.2)',
-                  padding: '4px 10px',
-                  borderRadius: '2px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}
-              >
-                <Film size={12} color="#D7A84B" />
-                {anchor}
-              </span>
-            ))}
+            <ShieldCheck size={16} color="var(--vyora-accent)" />
+            <span className="font-display" style={{ fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--vyora-accent)' }}>
+              {matchScore}% VIBE MATCH ✦
+            </span>
           </div>
         </div>
-      )}
+
+        {/* Editorial Take */}
+        <div style={{ padding: '16px', backgroundColor: 'var(--vyora-bg-secondary)', borderLeft: '3px solid var(--vyora-accent)', borderRadius: '3px', marginBottom: '20px' }}>
+          <p style={{ fontSize: '0.95rem', color: 'var(--vyora-text)', fontStyle: 'italic', margin: 0, lineHeight: 1.5 }}>
+            "{vyorasTake}"
+          </p>
+        </div>
+
+        {/* Why This Found You Section */}
+        <div style={{ marginBottom: '20px' }}>
+          <h4 style={{ fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--vyora-text-muted)', marginBottom: '12px', fontWeight: 'bold' }}>
+            WHY THIS FOUND YOU
+          </h4>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {reasonsList.map((reason, idx) => (
+              <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.88rem', color: 'var(--vyora-text)', lineHeight: 1.4 }}>
+                <CheckCircle2 size={16} color="var(--vyora-accent)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <span>{reason}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Preference Vector Tags */}
+      <div style={{ paddingTop: '16px', borderTop: '1px dashed var(--vyora-border)', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+        <Tag size={14} color="var(--vyora-text-muted)" />
+        <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--vyora-text-muted)' }}>
+          PREFERENCE VECTORS:
+        </span>
+        {movie.genres?.map(g => (
+          <span key={g} className="stamp-badge" style={{ fontSize: '0.68rem', padding: '2px 6px' }}>
+            {g}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

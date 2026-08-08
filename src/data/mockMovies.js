@@ -1,72 +1,84 @@
-// Centralized Mock Data for CINEMATIC
-// Structured for easy migration to FastAPI backend
+// Centralized Mock Data for VYORA — Find Your Vibe
+// Structured for seamless FastAPI backend migration
 
 export const MOODS = [
   {
     id: "mind-bending",
-    title: "Mind-Bending",
-    description: "Movies that shatter reality, warp time, and break your brain.",
+    title: "MIND-BENDING",
+    description: "I want to question reality.",
     icon: "Brain",
     accent: "#C9572C", // Burnt Orange
-    tagline: "Question Everything"
-  },
-  {
-    id: "pure-adrenaline",
-    title: "Pure Adrenaline",
-    description: "High-octane thrillers, relentless action, and non-stop momentum.",
-    icon: "Zap",
-    accent: "#E9896A", // Soft Coral
-    tagline: "Heart Rate: 140 BPM"
+    tagline: "Break Your Mind"
   },
   {
     id: "feel-something",
-    title: "Feel Something",
-    description: "Deeply emotional, profound human drama and poignant storytelling.",
+    title: "FEEL SOMETHING",
+    description: "I want an emotional story.",
     icon: "Heart",
     accent: "#632C32", // Deep Wine
-    tagline: "Tears Guaranteed"
+    tagline: "Profound Emotion"
   },
   {
     id: "make-me-laugh",
-    title: "Make Me Laugh",
-    description: "Witty satire, absurd comedy, and smart comedic masterpieces.",
+    title: "MAKE ME LAUGH",
+    description: "I need something stupidly fun.",
     icon: "Smile",
     accent: "#D7A84B", // Muted Gold
     tagline: "Instant Dopamine"
   },
   {
-    id: "escape-reality",
-    title: "Escape Reality",
-    description: "Lush visual fantasy, breathtaking world-building, and pure wonder.",
-    icon: "Sparkles",
-    accent: "#C9572C",
-    tagline: "Total Immersion"
+    id: "pure-adrenaline",
+    title: "PURE ADRENALINE",
+    description: "Give me chaos.",
+    icon: "Flame",
+    accent: "#E9896A", // Soft Coral
+    tagline: "Heart Rate 140 BPM"
   },
   {
     id: "solve-a-mystery",
-    title: "Solve a Mystery",
-    description: "Gripping whodunits, noir detective tales, and unexpected twists.",
+    title: "SOLVE A MYSTERY",
+    description: "I want to figure something out.",
     icon: "Search",
     accent: "#632C32",
     tagline: "Trust No One"
   },
   {
-    id: "something-comforting",
-    title: "Something Comforting",
-    description: "Warm, cozy, aesthetic films that feel like a hot cup of tea.",
-    icon: "Coffee",
-    accent: "#D7A84B",
-    tagline: "Cozy Visuals"
+    id: "scare-me",
+    title: "SCARE ME",
+    description: "I want to be uncomfortable.",
+    icon: "Ghost",
+    accent: "#C9572C",
+    tagline: "Unsettling Atmospheric Horror"
   },
   {
-    id: "absolute-chaos",
-    title: "Absolute Chaos",
-    description: "Unpredictable, wild, genre-defying cinematic madness.",
-    icon: "Flame",
+    id: "something-comforting",
+    title: "SOMETHING COMFORTING",
+    description: "I just want a warm story.",
+    icon: "Coffee",
+    accent: "#D7A84B",
+    tagline: "Warm Cozy Visuals"
+  },
+  {
+    id: "escape-reality",
+    title: "ESCAPE REALITY",
+    description: "Take me somewhere impossible.",
+    icon: "Sparkles",
     accent: "#E9896A",
-    tagline: "No Rules"
+    tagline: "Immersive World-Building"
   }
 ];
+
+export const SUB_VIBES = {
+  "Horror": ["Psychological", "Supernatural", "Slow Burn", "Creature"],
+  "Sci-Fi": ["Space", "Time Travel", "AI", "Dystopian"],
+  "Comedy": ["Rom-Com", "Dark Comedy", "Absurd", "Feel Good"],
+  "Romance": ["Slow Burn", "Melodrama", "Quirky", "Bittersweet"],
+  "Thriller": ["Neo-Noir", "Crime", "Psychological", "Action-Packed"],
+  "Drama": ["Character Study", "Historical", "Family", "Coming-of-Age"],
+  "Mystery": ["Whodunit", "Gothic", "Tech Mystery", "Noir"],
+  "Action": ["Martial Arts", "Sci-Fi Action", "Survival", "Heist"],
+  "Animation": ["Multiverse", "Studio Ghibli Aesthetic", "Experimental", "Fantasy"]
+};
 
 export const MOVIES = [
   {
@@ -76,18 +88,26 @@ export const MOVIES = [
     director: "Christopher Nolan",
     runtime: "169 min",
     rating: 8.7,
+    vibeMatchScore: 94,
     genres: ["Sci-Fi", "Adventure", "Drama"],
     moods: ["mind-bending", "feel-something", "escape-reality"],
+    subVibe: "Space",
     poster: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800",
     backdrop: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&q=80&w=1200",
     tagline: "Mankind was born on Earth. It was never meant to die here.",
     description: "When Earth faces catastrophic agricultural collapse, a team of explorers undertakes humanity's most crucial mission: traveling beyond our galaxy to find a new home amongst the stars.",
+    vyorasTake: "Your recent choices suggest you enjoy stories that mix mystery, science fiction and deep emotional father-daughter bonds under cosmic stakes.",
+    whereToWatch: [
+      { name: "Paramount+", type: "Subscription", quality: "4K HDR" },
+      { name: "Prime Video", type: "Rent / Buy", quality: "4K" },
+      { name: "Apple TV", type: "Rent / Buy", quality: "4K" }
+    ],
     dna: {
       metrics: [
         { label: "Sci-Fi", value: 94 },
         { label: "Adventure", value: 85 },
         { label: "Drama", value: 78 },
-        { label: "Mystery", value: 65 }
+        { label: "Mystery", value: 63 }
       ],
       atmosphere: ["Epic", "Emotional", "Thought-provoking", "Cosmic", "Hopeful", "Haunting Score"]
     },
@@ -96,16 +116,16 @@ export const MOVIES = [
       vectorMatch: "High match with cosmic exploratory narratives and emotional family core.",
       anchorMovies: ["Arrival", "Dune", "Gravity", "2001: A Space Odyssey"],
       reasons: [
-        "94% Sci-Fi vector match with deep space mechanics",
-        "88% score resonance (Hans Zimmer composition)",
-        "Strong emotional father-daughter bond under high sci-fi stakes"
+        "Similar to movies you enjoyed recently",
+        "Matches your current mind-bending vibe selection",
+        "Strong mystery and non-linear temporal elements",
+        "Popular with users who share your cosmic taste vector"
       ]
     },
     constellation: [
       { id: "arrival-2016", title: "Arrival", similarity: 0.91, category: "Sci-Fi / Lingual" },
       { id: "dune-2021", title: "Dune", similarity: 0.88, category: "Sci-Fi / Epic" },
       { id: "gravity-2013", title: "Gravity", similarity: 0.82, category: "Sci-Fi / Survival" },
-      { id: "the-martian-2015", title: "The Martian", similarity: 0.79, category: "Sci-Fi / Survival" },
       { id: "blade-runner-2049", title: "Blade Runner 2049", similarity: 0.85, category: "Sci-Fi / Atmosphere" },
       { id: "the-prestige-2006", title: "The Prestige", similarity: 0.76, category: "Mystery / Nolan" }
     ]
@@ -117,12 +137,19 @@ export const MOVIES = [
     director: "Denis Villeneuve",
     runtime: "116 min",
     rating: 7.9,
+    vibeMatchScore: 91,
     genres: ["Sci-Fi", "Drama", "Mystery"],
     moods: ["mind-bending", "feel-something", "solve-a-mystery"],
+    subVibe: "Time Travel",
     poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=800",
     backdrop: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=1200",
     tagline: "Why are they here?",
     description: "A linguist works with the military to communicate with alien lifeforms after twelve mysterious spacecraft touch down across the globe, uncovering a revelation that transcends linear time.",
+    vyorasTake: "VYORA recommends this for its profound emotional resonance disguised inside hard alien linguistics.",
+    whereToWatch: [
+      { name: "Netflix", type: "Subscription", quality: "4K HDR" },
+      { name: "Prime Video", type: "Rent", quality: "HD" }
+    ],
     dna: {
       metrics: [
         { label: "Sci-Fi", value: 92 },
@@ -137,15 +164,15 @@ export const MOVIES = [
       vectorMatch: "Unmatched intellectual sci-fi with profound emotional payoff.",
       anchorMovies: ["Interstellar", "Contact", "Ex Machina"],
       reasons: [
+        "Matches your search for intellectual sci-fi",
         "95% non-linear time narrative alignment",
         "Ethereal sound design and contemplative pacing",
-        "Deep emotional perspective shift"
+        "Liked by 4 people in your Vibe Circle"
       ]
     },
     constellation: [
       { id: "interstellar-2014", title: "Interstellar", similarity: 0.91, category: "Sci-Fi" },
       { id: "blade-runner-2049", title: "Blade Runner 2049", similarity: 0.89, category: "Villeneuve Sci-Fi" },
-      { id: "ex-machina-2014", title: "Ex Machina", similarity: 0.81, category: "Sci-Fi / AI" },
       { id: "dune-2021", title: "Dune", similarity: 0.84, category: "Sci-Fi" }
     ]
   },
@@ -156,12 +183,19 @@ export const MOVIES = [
     director: "Denis Villeneuve",
     runtime: "155 min",
     rating: 8.0,
+    vibeMatchScore: 89,
     genres: ["Sci-Fi", "Adventure", "Action"],
     moods: ["escape-reality", "pure-adrenaline", "mind-bending"],
+    subVibe: "Dystopian",
     poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&q=80&w=800",
     backdrop: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=1200",
     tagline: "Beyond fear, destiny awaits.",
     description: "Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people.",
+    vyorasTake: "A monumental cinematic spectacle with desert gothic atmosphere and Hans Zimmer's hypnotic score.",
+    whereToWatch: [
+      { name: "Max", type: "Subscription", quality: "4K Dolby Vision" },
+      { name: "YouTube", type: "Rent", quality: "4K" }
+    ],
     dna: {
       metrics: [
         { label: "Sci-Fi", value: 96 },
@@ -173,19 +207,18 @@ export const MOVIES = [
     },
     recommendationReason: {
       similarityScore: 89,
-      vectorMatch: "Masterclass in world-building, scale, and immersive cinematic world design.",
+      vectorMatch: "Masterclass in world-building, scale, and immersive cinematic design.",
       anchorMovies: ["Blade Runner 2049", "Interstellar", "Mad Max: Fury Road"],
       reasons: [
         "Visually staggering scale and soundscapes",
-        "Political power intrigue meets cosmic prophecy",
-        "Deep desert aesthetic"
+        "Matches high world-building preference",
+        "Deep desert aesthetic and political intrigue"
       ]
     },
     constellation: [
       { id: "interstellar-2014", title: "Interstellar", similarity: 0.88, category: "Sci-Fi Epic" },
       { id: "blade-runner-2049", title: "Blade Runner 2049", similarity: 0.93, category: "Villeneuve Visuals" },
-      { id: "arrival-2016", title: "Arrival", similarity: 0.84, category: "Sci-Fi" },
-      { id: "mad-max-fury-road", title: "Mad Max: Fury Road", similarity: 0.78, category: "Desert Action" }
+      { id: "arrival-2016", title: "Arrival", similarity: 0.84, category: "Sci-Fi" }
     ]
   },
   {
@@ -195,12 +228,19 @@ export const MOVIES = [
     director: "Daniel Kwan, Daniel Scheinert",
     runtime: "139 min",
     rating: 8.8,
+    vibeMatchScore: 96,
     genres: ["Action", "Adventure", "Comedy", "Sci-Fi"],
-    moods: ["absolute-chaos", "mind-bending", "make-me-laugh", "feel-something"],
+    moods: ["pure-adrenaline", "mind-bending", "make-me-laugh", "feel-something"],
+    subVibe: "Absurd",
     poster: "https://images.unsplash.com/photo-1514539079130-25950c84af65?auto=format&fit=crop&q=80&w=800",
     backdrop: "https://images.unsplash.com/photo-1533158307587-828f0a76ef46?auto=format&fit=crop&q=80&w=1200",
     tagline: "The universe is far bigger than you think.",
     description: "A middle-aged Chinese immigrant is swept up into an insane adventure where she alone can save existence by exploring other universes and connecting with the lives she could have led.",
+    vyorasTake: "An explosion of pure chaos, absurd humor, martial arts, and heart-wrenching family reconciliation.",
+    whereToWatch: [
+      { name: "Prime Video", type: "Subscription", quality: "4K" },
+      { name: "Apple TV", type: "Rent", quality: "4K" }
+    ],
     dna: {
       metrics: [
         { label: "Multiverse Chaos", value: 99 },
@@ -213,17 +253,15 @@ export const MOVIES = [
     recommendationReason: {
       similarityScore: 96,
       vectorMatch: "Top match for creative original storytelling, multiverse philosophy, and family resolution.",
-      anchorMovies: ["Spider-Man: Into the Spider-Verse", "The Matrix", "Eternal Sunshine"],
+      anchorMovies: ["Spider-Man: Into the Spider-Verse", "Eternal Sunshine"],
       reasons: [
         "99% genre-bending originality",
-        "Blends absurdist martial arts with profound existential empathy",
-        "Oscar-winning masterpiece of modern cinema"
+        "Blends absurdist comedy with deep emotional empathy",
+        "Oscar-winning masterpiece"
       ]
     },
     constellation: [
-      { id: "spider-verse-2018", title: "Spider-Man: Into the Spider-Verse", similarity: 0.90, category: "Multiverse / Style" },
-      { id: "eternal-sunshine", title: "Eternal Sunshine of the Spotless Mind", similarity: 0.85, category: "Emotional Sci-Fi" },
-      { id: "knives-out-2019", title: "Knives Out", similarity: 0.77, category: "Original Story" }
+      { id: "spider-verse-2018", title: "Spider-Man: Into the Spider-Verse", similarity: 0.90, category: "Multiverse / Style" }
     ]
   },
   {
@@ -233,12 +271,19 @@ export const MOVIES = [
     director: "Denis Villeneuve",
     runtime: "164 min",
     rating: 8.0,
+    vibeMatchScore: 92,
     genres: ["Sci-Fi", "Drama", "Mystery"],
     moods: ["mind-bending", "escape-reality", "solve-a-mystery"],
+    subVibe: "AI",
     poster: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&q=80&w=800",
     backdrop: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=1200",
     tagline: "There's still a page left to be written.",
     description: "Young Blade Runner K's discovery of a long-buried secret leads him to track down former Blade Runner Rick Deckard, who's been missing for thirty years.",
+    vyorasTake: "Roger Deakins' landmark visual feast paired with reflective cyberpunk noir and artificial intelligence ethics.",
+    whereToWatch: [
+      { name: "Hulu", type: "Subscription", quality: "4K HDR" },
+      { name: "Prime Video", type: "Rent", quality: "4K" }
+    ],
     dna: {
       metrics: [
         { label: "Atmosphere", value: 99 },
@@ -250,12 +295,12 @@ export const MOVIES = [
     },
     recommendationReason: {
       similarityScore: 92,
-      vectorMatch: "Roger Deakins' landmark visual feast paired with reflective cyberpunk noir.",
+      vectorMatch: "Unrivaled visual aesthetic paired with deep philosophical cyberpunk noir.",
       anchorMovies: ["Dune", "Arrival", "The Matrix"],
       reasons: [
         "Unrivaled aesthetic composition & neon orange palettes",
         "Deep contemplation on consciousness and identity",
-        "Roger Deakins Oscar-winning visuals"
+        "High match with your Denis Villeneuve preference"
       ]
     },
     constellation: [
@@ -271,12 +316,19 @@ export const MOVIES = [
     director: "Wes Anderson",
     runtime: "99 min",
     rating: 8.1,
+    vibeMatchScore: 90,
     genres: ["Comedy", "Adventure", "Crime"],
     moods: ["something-comforting", "make-me-laugh", "escape-reality"],
+    subVibe: "Feel Good",
     poster: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800",
     backdrop: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1200",
     tagline: "A murder case. A stolen painting. A hotel concierge who knows everything.",
     description: "A writer encounters the owner of a high-class European hotel who recounts his youth as a lobby boy under the tutelage of an exceptional concierge.",
+    vyorasTake: "Pure aesthetic comfort food. Wes Anderson's symmetrical pastel world built with fast-paced literary comedy.",
+    whereToWatch: [
+      { name: "Disney+", type: "Subscription", quality: "4K" },
+      { name: "Prime Video", type: "Rent", quality: "HD" }
+    ],
     dna: {
       metrics: [
         { label: "Symmetry & Style", value: 99 },
@@ -289,11 +341,11 @@ export const MOVIES = [
     recommendationReason: {
       similarityScore: 90,
       vectorMatch: "Perfection in editorial frame composition, pastel aesthetic, and fast-paced literary comedy.",
-      anchorMovies: ["Knives Out", "Fantastic Mr. Fox", "Amélie"],
+      anchorMovies: ["Knives Out", "Amélie"],
       reasons: [
-        "Unmistakable Wes Anderson color palettes and symmetry",
+        "Unmistakable Wes Anderson color palettes",
         "Delightful dialogue and ensemble performance",
-        "Pure aesthetic comfort food"
+        "Warm comforting visual experience"
       ]
     },
     constellation: [
@@ -308,12 +360,19 @@ export const MOVIES = [
     director: "Rian Johnson",
     runtime: "130 min",
     rating: 7.9,
+    vibeMatchScore: 88,
     genres: ["Comedy", "Crime", "Drama", "Mystery"],
     moods: ["solve-a-mystery", "make-me-laugh", "something-comforting"],
+    subVibe: "Whodunit",
     poster: "https://images.unsplash.com/photo-1518676599602-f17053b4c322?auto=format&fit=crop&q=80&w=800",
     backdrop: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&q=80&w=1200",
     tagline: "Uncover the truth. Mind the twist.",
     description: "A detective investigates the death of a patriarch of an eccentric, combative family in a gothic mansion packed with secrets and motives.",
+    vyorasTake: "A cozy rainy-day whodunit with razor-sharp satire and Daniel Craig's eccentric Southern detective.",
+    whereToWatch: [
+      { name: "Apple TV", type: "Subscription", quality: "4K" },
+      { name: "YouTube", type: "Rent", quality: "4K" }
+    ],
     dna: {
       metrics: [
         { label: "Whodunit Twist", value: 96 },
@@ -326,11 +385,11 @@ export const MOVIES = [
     recommendationReason: {
       similarityScore: 88,
       vectorMatch: "Modern reinvention of the classic murder mystery with stellar ensemble acting.",
-      anchorMovies: ["The Grand Budapest Hotel", "Glass Onion", "Clue"],
+      anchorMovies: ["The Grand Budapest Hotel", "The Prestige"],
       reasons: [
-        "Intricate plot craft that keeps you guessing",
-        "Daniel Craig's iconic Southern detective Benoit Blanc",
-        "Perfect rainy-day autumn watch"
+        "Intricate puzzle-box plot craft",
+        "Witty ensemble comedy and gothic atmosphere",
+        "Recommended by Aarav in your Vibe Circle"
       ]
     },
     constellation: [
@@ -339,190 +398,159 @@ export const MOVIES = [
     ]
   },
   {
-    id: "spider-verse-2018",
-    title: "Spider-Man: Into the Spider-Verse",
+    id: "hereditary-2018",
+    title: "Hereditary",
     year: 2018,
-    director: "Bob Persichetti, Peter Ramsey, Rodney Rothman",
-    runtime: "117 min",
-    rating: 8.4,
-    genres: ["Animation", "Action", "Adventure", "Sci-Fi"],
-    moods: ["pure-adrenaline", "absolute-chaos", "escape-reality", "make-me-laugh"],
-    poster: "https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&q=80&w=800",
-    backdrop: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=1200",
-    tagline: "Anyone can wear the mask.",
-    description: "Teen Miles Morales becomes the Spider-Man of his universe, and must join forces with five spider-powered individuals from other dimensions to stop a threat to all reality.",
-    dna: {
-      metrics: [
-        { label: "Visual Style", value: 100 },
-        { label: "Kinetic Action", value: 95 },
-        { label: "Hip-Hop Beats", value: 94 },
-        { label: "Heart", value: 91 }
-      ],
-      atmosphere: ["Comic-Book Living Art", "Vibrant", "Exhilarating", "Fresh", "Inspiring"]
-    },
-    recommendationReason: {
-      similarityScore: 95,
-      vectorMatch: "Revolutionary visual innovation that redefined modern animation.",
-      anchorMovies: ["Everything Everywhere All at Once", "Spider-Man: Across the Spider-Verse"],
-      reasons: [
-        "100% animation craftsmanship & frame-rate dynamism",
-        "Iconic soundtrack and emotional coming-of-age story",
-        "Visually explosive comic book aesthetic"
-      ]
-    },
-    constellation: [
-      { id: "everything-everywhere-all-at-once", title: "Everything Everywhere All at Once", similarity: 0.90, category: "Multiverse Action" }
-    ]
-  },
-  {
-    id: "whiplash-2014",
-    title: "Whiplash",
-    year: 2014,
-    director: "Damien Chazelle",
-    runtime: "106 min",
-    rating: 8.5,
-    genres: ["Drama", "Music"],
-    moods: ["pure-adrenaline", "feel-something"],
-    poster: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800",
-    backdrop: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=1200",
-    tagline: "The pursuit of greatness takes no prisoners.",
-    description: "A promising young drummer enrolls at a cut-throat music conservatory where his dreams of greatness are mentored by an instructor who will stop at nothing to realize a student's potential.",
-    dna: {
-      metrics: [
-        { label: "Intensity", value: 99 },
-        { label: "Jazz Rhythm", value: 96 },
-        { label: "Drama", value: 94 },
-        { label: "Obsession", value: 98 }
-      ],
-      atmosphere: ["Relentless", "Visceral", "Electric", "Tense", "Sweat-inducing"]
-    },
-    recommendationReason: {
-      similarityScore: 93,
-      vectorMatch: "High tension psychological duel framed around artistic perfectionism.",
-      anchorMovies: ["La La Land", "Black Swan", "The Social Network"],
-      reasons: [
-        "Tension tighter than most thriller movies",
-        "Unforgettable drum climax sequence",
-        "Oscar-winning performance by J.K. Simmons"
-      ]
-    },
-    constellation: [
-      { id: "la-la-land-2016", title: "La La Land", similarity: 0.81, category: "Damien Chazelle Music" }
-    ]
-  },
-  {
-    id: "la-la-land-2016",
-    title: "La La Land",
-    year: 2016,
-    director: "Damien Chazelle",
-    runtime: "128 min",
-    rating: 8.0,
-    genres: ["Comedy", "Drama", "Music", "Romance"],
-    moods: ["feel-something", "something-comforting", "escape-reality"],
-    poster: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800",
-    backdrop: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=1200",
-    tagline: "Here's to the fools who dream.",
-    description: "While navigating their careers in Los Angeles, a pianist and an actress fall in love while attempting to reconcile their aspirations for the future.",
-    dna: {
-      metrics: [
-        { label: "Technicolor Romance", value: 96 },
-        { label: "Jazz Score", value: 98 },
-        { label: "Nostalgia", value: 92 },
-        { label: "Heartbreak", value: 85 }
-      ],
-      atmosphere: ["Dreamy", "Lyrical", "Bitter-sweet", "Gorgeous", "Romantic"]
-    },
-    recommendationReason: {
-      similarityScore: 89,
-      vectorMatch: "Warm homage to classic Hollywood musicals with a grounded modern heart.",
-      anchorMovies: ["Whiplash", "The Grand Budapest Hotel", "Singin' in the Rain"],
-      reasons: [
-        "Swooning twilight visuals and piano melodies",
-        "Electrifying chemistry between Ryan Gosling and Emma Stone",
-        "Profound meditation on art vs personal life choices"
-      ]
-    },
-    constellation: [
-      { id: "whiplash-2014", title: "Whiplash", similarity: 0.81, category: "Damien Chazelle" },
-      { id: "grand-budapest-hotel", title: "The Grand Budapest Hotel", similarity: 0.78, category: "Color & Style" }
-    ]
-  },
-  {
-    id: "the-prestige-2006",
-    title: "The Prestige",
-    year: 2006,
-    director: "Christopher Nolan",
-    runtime: "130 min",
-    rating: 8.5,
-    genres: ["Drama", "Mystery", "Sci-Fi"],
-    moods: ["mind-bending", "solve-a-mystery"],
-    poster: "https://images.unsplash.com/photo-1514539079130-25950c84af65?auto=format&fit=crop&q=80&w=800",
-    backdrop: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&q=80&w=1200",
-    tagline: "Are you watching closely?",
-    description: "After a tragic accident, two stage magicians in 1890s London engage in a battle to create the ultimate illusion while sacrificing everything they have to outsmart each other.",
-    dna: {
-      metrics: [
-        { label: "Sleight of Hand", value: 98 },
-        { label: "Obsession", value: 96 },
-        { label: "Victorian Gothic", value: 88 },
-        { label: "Climax Twist", value: 97 }
-      ],
-      atmosphere: ["Dark", "Obsessive", "Calculated", "Mind-bending", "Gothic"]
-    },
-    recommendationReason: {
-      similarityScore: 91,
-      vectorMatch: "One of Christopher Nolan's finest puzzle-box narrative constructions.",
-      anchorMovies: ["Interstellar", "Inception", "Knives Out"],
-      reasons: [
-        "Layered three-act structure modeled on magic tricks",
-        "Rivalling performances by Christian Bale and Hugh Jackman",
-        "Haunting Tesla science elements"
-      ]
-    },
-    constellation: [
-      { id: "interstellar-2014", title: "Interstellar", similarity: 0.76, category: "Nolan Sci-Fi" },
-      { id: "knives-out-2019", title: "Knives Out", similarity: 0.79, category: "Intricate Twist" }
-    ]
-  },
-  {
-    id: "parasite-2019",
-    title: "Parasite",
-    year: 2019,
-    director: "Bong Joon Ho",
-    runtime: "132 min",
-    rating: 8.5,
-    genres: ["Drama", "Thriller", "Comedy"],
-    moods: ["mind-bending", "feel-something", "absolute-chaos", "solve-a-mystery"],
-    poster: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800",
+    director: "Ari Aster",
+    runtime: "127 min",
+    rating: 7.3,
+    vibeMatchScore: 86,
+    genres: ["Horror", "Drama", "Mystery"],
+    moods: ["scare-me", "mind-bending", "solve-a-mystery"],
+    subVibe: "Psychological",
+    poster: "https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&q=80&w=800",
     backdrop: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=1200",
-    tagline: "Act like you own the place.",
-    description: "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
+    tagline: "Every family tree hides a secret.",
+    description: "A grieving family is haunted by tragic and disturbing occurrences after the death of their secretive grandmother, spiraling into terrifying occult revelations.",
+    vyorasTake: "Unflinching psychological horror centered around grief, ancestral trauma, and meticulous dreadful atmosphere.",
+    whereToWatch: [
+      { name: "A24 / Prime Video", type: "Subscription", quality: "4K" },
+      { name: "Apple TV", type: "Rent", quality: "4K" }
+    ],
     dna: {
       metrics: [
-        { label: "Social Satire", value: 99 },
-        { label: "Tension Shift", value: 97 },
-        { label: "Architecture", value: 92 },
-        { label: "Dark Comedy", value: 89 }
+        { label: "Dread", value: 98 },
+        { label: "Psychological Horror", value: 95 },
+        { label: "Tension", value: 96 },
+        { label: "Grief Drama", value: 91 }
       ],
-      atmosphere: ["Masterpiece", "Tense", "Unpredictable", "Sharp", "Searing"]
+      atmosphere: ["Suffocating", "Unsettling", "Disturbing", "Masterful", "Meticulous"]
     },
     recommendationReason: {
-      similarityScore: 97,
-      vectorMatch: "Flawlessly executed genre hybrid that transforms midway into an unforgettable thriller.",
-      anchorMovies: ["Knives Out", "Whiplash", "Everything Everywhere All at Once"],
+      similarityScore: 86,
+      vectorMatch: "Top tier psychological dread with relentless artistic commitment.",
+      anchorMovies: ["Arrival", "Parasite"],
       reasons: [
-        "Historical Palme d'Or and Best Picture Oscar winner",
-        "Surgical script precision and visual metaphors",
-        "Constant narrative surprise"
+        "Matches 'Scare Me' atmospheric horror vibe",
+        "Deep psychological character exploration",
+        "Masterful performance by Toni Collette"
       ]
     },
     constellation: [
-      { id: "everything-everywhere-all-at-once", title: "Everything Everywhere All at Once", similarity: 0.86, category: "Original Masterpiece" }
+      { id: "arrival-2016", title: "Arrival", similarity: 0.74, category: "Atmospheric Mystery" }
     ]
   }
 ];
 
+export const MOCK_VIBE_USERS = [
+  {
+    id: "diya-product",
+    name: "Diya",
+    role: "Frontend / Product",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300",
+    vibeMatch: 95,
+    topGenres: ["Sci-Fi", "Editorial Cinema", "Animation"],
+    sharedMoviesCount: 18,
+    bio: "Creating cinematic UI & finding warm editorial film gems.",
+    isCircleMember: true,
+    isPending: false
+  },
+  {
+    id: "yatharth-ai",
+    name: "Yatharth",
+    role: "Backend / AI",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300",
+    vibeMatch: 90,
+    topGenres: ["Mind-Bending", "Sci-Fi", "Cyberpunk"],
+    sharedMoviesCount: 15,
+    bio: "Building vector embedding recommendation pipelines & neural taste maps.",
+    isCircleMember: true,
+    isPending: false
+  },
+  {
+    id: "aarav-sci-fi",
+    name: "Aarav",
+    role: "Vibe Alchemist",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300",
+    vibeMatch: 87,
+    topGenres: ["Sci-Fi", "Thriller", "Mystery"],
+    sharedMoviesCount: 12,
+    bio: "Obsessed with Christopher Nolan timelines and atmospheric Denis Villeneuve visual loops.",
+    isCircleMember: true,
+    isPending: false
+  },
+  {
+    id: "maya-drama",
+    name: "Maya",
+    role: "Editorial Curator",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300",
+    vibeMatch: 81,
+    topGenres: ["Drama", "Romance", "Indie"],
+    sharedMoviesCount: 9,
+    bio: "Collecting bitter-sweet romance films and 35mm film festival cutdowns.",
+    isCircleMember: true,
+    isPending: false
+  },
+  {
+    id: "rohan-action",
+    name: "Rohan",
+    role: "Chaos Explorer",
+    avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=300",
+    vibeMatch: 76,
+    topGenres: ["Action", "Pure Adrenaline", "Sci-Fi"],
+    sharedMoviesCount: 6,
+    bio: "Seeking high-speed car chases, neon synthwave, and non-stop momentum.",
+    isCircleMember: false,
+    isPending: true
+  },
+  {
+    id: "priya-animation",
+    name: "Priya",
+    role: "Visual Storyteller",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=300",
+    vibeMatch: 72,
+    topGenres: ["Animation", "Fantasy", "Comedy"],
+    sharedMoviesCount: 8,
+    bio: "Studio Ghibli enthusiast & lover of vibrant multiverse art direction.",
+    isCircleMember: false,
+    isPending: false
+  }
+];
+
+export const SHARED_VIBES_DATA = {
+  "aarav-sci-fi": {
+    userId: "aarav-sci-fi",
+    userName: "Aarav",
+    vibeMatch: 87,
+    sharedCount: 12,
+    sharedGenres: ["Sci-Fi", "Thriller", "Mystery"],
+    bothLove: [
+      "interstellar-2014",
+      "arrival-2016",
+      "everything-everywhere-all-at-once"
+    ],
+    couldIntroduce: [
+      "blade-runner-2049",
+      "dune-2021",
+      "hereditary-2018"
+    ]
+  }
+};
+
+export const MOCK_VIBE_EVOLUTION = [
+  { month: "January", vibe: "MAKE ME LAUGH", genre: "Comedy", icon: "Smile", color: "#D7A84B" },
+  { month: "March", vibe: "MIND-BENDING", genre: "Sci-Fi", icon: "Brain", color: "#C9572C" },
+  { month: "May", vibe: "SOLVE A MYSTERY", genre: "Thriller", icon: "Search", color: "#632C32" },
+  { month: "August", vibe: "FEEL SOMETHING", genre: "Drama", icon: "Heart", color: "#E9896A" }
+];
+
 export const MOCK_USER_UNIVERSE = {
+  profile: {
+    name: "Movie Enthusiast",
+    username: "@vibefinder",
+    bio: "Mapping my cinematic consciousness through VYORA vector analysis.",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300"
+  },
   stats: {
     totalWatched: 142,
     favoriteGenre: "Sci-Fi / Mind-Bending",
@@ -544,7 +572,7 @@ export const MOCK_USER_UNIVERSE = {
   ],
   watchlist: [
     "blade-runner-2049",
-    "parasite-2019",
-    "the-prestige-2006"
+    "knives-out-2019",
+    "hereditary-2018"
   ]
 };

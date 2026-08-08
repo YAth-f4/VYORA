@@ -14,7 +14,6 @@ export default function MoodSelector({ moods, selectedMood, onSelectMood, onRese
       }}
     >
       <SectionTitle
-        number="01"
         badgeText="CURATED MOOD ENGINE"
         title="WHAT ARE YOU IN THE MOOD FOR?"
         subtitle="Select an emotional or sensory state to calibrate the recommendation algorithms."

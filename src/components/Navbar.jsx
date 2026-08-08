@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Film, Compass, User, Search, Sparkles } from 'lucide-react';
+import { Compass, User, Search, Sparkles, Sun, Moon, Users } from 'lucide-react';
 
-export default function Navbar({ onOpenSearch }) {
+export default function Navbar({ onOpenSearch, theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 40) {
+      if (window.scrollY > 25) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -19,9 +19,10 @@ export default function Navbar({ onOpenSearch }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { label: 'Discover', path: '/', icon: Sparkles },
-    { label: 'Explore', path: '/explore', icon: Compass },
+  // Main 3 Navigation Items in Center
+  const mainNavLinks = [
+    { label: 'Discover', path: '/movie-home', icon: Sparkles },
+    { label: 'Vibe Library', path: '/library', icon: Compass },
     { label: 'My Universe', path: '/universe', icon: User }
   ];
 
@@ -31,87 +32,102 @@ export default function Navbar({ onOpenSearch }) {
         position: 'sticky',
         top: 0,
         zIndex: 1000,
-        backgroundColor: scrolled ? '#EDE2D2' : 'transparent',
-        borderBottom: scrolled ? '1px solid rgba(116, 107, 99, 0.2)' : '1px solid transparent',
-        transition: 'all 0.4s ease',
-        backdropFilter: scrolled ? 'blur(8px)' : 'none'
+        backgroundColor: scrolled ? 'var(--vyora-bg-secondary)' : 'rgba(18, 10, 24, 0.94)',
+        borderBottom: scrolled ? '1px solid var(--vyora-border-strong)' : '1px solid rgba(168, 117, 255, 0.15)',
+        transition: 'all 0.3s ease',
+        backdropFilter: 'blur(12px)',
+        padding: '6px 24px'
       }}
     >
       <div
         style={{
           maxWidth: '1280px',
           margin: '0 auto',
-          padding: '16px 24px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          gap: '20px',
+          minHeight: '85px'
         }}
       >
-        {/* Brand Logo */}
+        {/* ==================================================================
+            1. LEFT: VYORA BRAND LOGO & MASCOT (Compact Scale)
+           ================================================================== */}
         <Link
           to="/"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '10px',
+            gap: '8px',
             textDecoration: 'none',
-            color: '#252322'
+            color: 'var(--vyora-text)',
+            flexShrink: 0
           }}
         >
-          <div
+          <img
+            src="/vyora-mascot.png"
+            alt="VYORA mascot"
             style={{
-              width: '36px',
-              height: '36px',
-              backgroundColor: '#C9572C',
-              color: '#FAF6F0',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '2px',
-              transform: 'rotate(-2deg)',
-              boxShadow: '0 2px 8px rgba(201, 87, 44, 0.3)'
+              width: '38px',
+              height: '38px',
+              borderRadius: '8px',
+              objectFit: 'cover',
+              border: '1.5px solid var(--vyora-accent)',
+              boxShadow: '0 0 10px rgba(168, 117, 255, 0.25)',
+              transition: 'transform 0.2s ease, boxShadow 0.2s ease',
+              flexShrink: 0
             }}
-          >
-            <Film size={20} />
-          </div>
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = 'scale(1.06) translateY(-1px)';
+              e.currentTarget.style.boxShadow = '0 0 16px rgba(168, 117, 255, 0.45)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = 'none';
+              e.currentTarget.style.boxShadow = '0 0 10px rgba(168, 117, 255, 0.25)';
+            }}
+          />
           <div>
             <span
-              className="font-editorial"
+              className="font-display"
               style={{
-                fontSize: '1.4rem',
-                fontWeight: 700,
-                letterSpacing: '0.08em',
+                fontSize: '1.25rem',
+                letterSpacing: '0.05em',
                 textTransform: 'uppercase',
                 display: 'block',
                 lineHeight: 1
               }}
             >
-              CINEMATIC
+              VYORA <span className="vyora-mark">✦</span>
             </span>
             <span
               style={{
-                fontSize: '0.62rem',
-                letterSpacing: '0.22em',
+                fontSize: '0.58rem',
+                letterSpacing: '0.16em',
                 textTransform: 'uppercase',
-                color: '#746B63',
+                color: 'var(--vyora-accent)',
                 display: 'block',
-                marginTop: '2px'
+                marginTop: '2px',
+                fontStyle: 'italic',
+                fontWeight: 600
               }}
             >
-              FILM DISCOVERY
+              Find Your Vibe.
             </span>
           </div>
         </Link>
 
-        {/* Center Navigation Links */}
+        {/* ==================================================================
+            2. CENTER: MAIN NAVIGATION LINKS (Compact Footprint)
+           ================================================================== */}
         <div
+          className="desktop-nav-links"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '32px'
+            gap: '20px'
           }}
         >
-          {navLinks.map(link => {
+          {mainNavLinks.map(link => {
             const isActive = location.pathname === link.path;
             const Icon = link.icon;
             return (
@@ -123,27 +139,34 @@ export default function Navbar({ onOpenSearch }) {
                   alignItems: 'center',
                   gap: '6px',
                   textDecoration: 'none',
-                  fontSize: '0.9rem',
+                  fontSize: '0.85rem',
                   fontWeight: isActive ? '700' : '500',
-                  color: isActive ? '#C9572C' : '#252322',
-                  padding: '6px 12px',
-                  borderRadius: '2px',
+                  color: isActive ? 'var(--vyora-accent)' : 'var(--vyora-text-muted)',
+                  padding: '4px 10px',
+                  borderRadius: '3px',
                   position: 'relative',
-                  transition: 'color 0.2s ease'
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={e => {
+                  if (!isActive) e.currentTarget.style.color = 'var(--vyora-text)';
+                }}
+                onMouseLeave={e => {
+                  if (!isActive) e.currentTarget.style.color = 'var(--vyora-text-muted)';
                 }}
               >
-                <Icon size={16} />
+                <Icon size={14} color={isActive ? 'var(--vyora-accent)' : 'var(--vyora-text-muted)'} />
                 <span>{link.label}</span>
                 {isActive && (
                   <span
                     style={{
                       position: 'absolute',
-                      bottom: '-4px',
-                      left: '12px',
-                      right: '12px',
+                      bottom: '-3px',
+                      left: '8px',
+                      right: '8px',
                       height: '2px',
-                      backgroundColor: '#C9572C',
-                      borderRadius: '1px'
+                      backgroundColor: 'var(--vyora-accent)',
+                      borderRadius: '1px',
+                      boxShadow: 'var(--vyora-glow)'
                     }}
                   />
                 )}
@@ -152,62 +175,165 @@ export default function Navbar({ onOpenSearch }) {
           })}
         </div>
 
-        {/* Right Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          {/* Quick Search */}
+        {/* ==================================================================
+            3. RIGHT AREA: COMPACT SEARCH BAR + THINNER VERTICAL CONTROL STACK
+           ================================================================== */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '14px'
+          }}
+        >
+          {/* SEARCH BAR (Compact Height & Width) */}
           <button
+            type="button"
             onClick={onOpenSearch}
             aria-label="Search movies"
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              padding: '8px 14px',
-              backgroundColor: '#FAF6F0',
-              border: '1px solid rgba(116, 107, 99, 0.25)',
-              borderRadius: '2px',
+              padding: '6px 14px',
+              backgroundColor: 'var(--vyora-surface)',
+              border: '1px solid var(--vyora-border-strong)',
+              borderRadius: '18px',
               cursor: 'pointer',
-              fontSize: '0.85rem',
-              color: '#746B63',
-              transition: 'all 0.2s ease'
+              fontSize: '0.8rem',
+              color: 'var(--vyora-text-muted)',
+              width: 'clamp(160px, 20vw, 260px)',
+              height: '36px',
+              transition: 'all 0.2s ease',
+              boxShadow: 'var(--shadow-sm)'
             }}
-            onMouseEnter={e => (e.currentTarget.style.borderColor = '#C9572C')}
-            onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(116, 107, 99, 0.25)')}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = 'var(--vyora-accent)';
+              e.currentTarget.style.boxShadow = 'var(--vyora-glow)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = 'var(--vyora-border-strong)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+            }}
           >
-            <Search size={15} color="#C9572C" />
-            <span style={{ display: 'none', minWidth: '80px' }} className="search-text-desktop">
-              Find film...
+            <Search size={14} color="var(--vyora-accent)" />
+            <span style={{ fontSize: '0.8rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              Search your next obsession...
             </span>
           </button>
 
-          {/* Profile Circle Button */}
-          <button
-            onClick={() => navigate('/universe')}
-            title="My Film Universe Profile"
+          {/* ================================================================
+              RIGHT-SIDE THINNER VERTICAL CONTROL STACK:
+              A. [ USER PROFILE ]
+              B. [ VIBE CIRCLE ]
+              C. [ ☀ / ☾ THEME ]
+             ================================================================ */}
+          <div
             style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              backgroundColor: '#632C32',
-              color: '#FAF6F0',
-              border: '2px solid #D7A84B',
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              boxShadow: '0 2px 10px rgba(99, 44, 50, 0.25)',
-              transition: 'transform 0.2s ease'
+              gap: '3px',
+              paddingLeft: '6px',
+              borderLeft: '1px dashed var(--vyora-border-strong)'
             }}
-            onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.06)')}
-            onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
           >
-            <span
-              className="font-editorial"
-              style={{ fontSize: '1rem', fontWeight: 'bold' }}
+            {/* A. USER PROFILE (Top Compact Circular Button) */}
+            <button
+              type="button"
+              onClick={() => navigate('/universe')}
+              title="My Universe Profile"
+              aria-label="My Universe Profile"
+              style={{
+                width: '28px',
+                height: '28px',
+                borderRadius: '50%',
+                backgroundColor: 'var(--vyora-surface)',
+                color: 'var(--vyora-gold)',
+                border: '1.5px solid var(--vyora-gold)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                boxShadow: '0 0 8px rgba(255, 203, 119, 0.25)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+                e.currentTarget.style.boxShadow = '0 0 14px rgba(255, 203, 119, 0.45)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = '0 0 8px rgba(255, 203, 119, 0.25)';
+              }}
             >
-              C
-            </span>
-          </button>
+              <span className="font-display" style={{ fontSize: '0.78rem', fontWeight: 'bold', color: 'var(--vyora-gold)' }}>
+                V
+              </span>
+            </button>
+
+            {/* B. VIBE CIRCLE (Middle Compact Circular Social Button) */}
+            <button
+              type="button"
+              onClick={() => navigate('/circle')}
+              title="Vibe Circle Taste Network"
+              aria-label="Vibe Circle Taste Network"
+              style={{
+                width: '28px',
+                height: '28px',
+                borderRadius: '50%',
+                backgroundColor: location.pathname === '/circle' ? 'var(--vyora-accent)' : 'var(--vyora-surface)',
+                color: location.pathname === '/circle' ? '#120A18' : 'var(--vyora-accent)',
+                border: '1.5px solid var(--vyora-accent)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                boxShadow: 'var(--vyora-glow)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+                e.currentTarget.style.boxShadow = '0 0 14px rgba(168, 117, 255, 0.55)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = 'var(--vyora-glow)';
+              }}
+            >
+              <Users size={13} />
+            </button>
+
+            {/* C. LIGHT / DARK THEME (Bottom Compact Circular Toggle Button) */}
+            <button
+              type="button"
+              onClick={onToggleTheme}
+              title={theme === 'day' ? 'Switch to Night Mode (Obsidian Plum)' : 'Switch to Day Mode (Warm Moon)'}
+              aria-label="Toggle theme mode"
+              style={{
+                width: '28px',
+                height: '28px',
+                borderRadius: '50%',
+                backgroundColor: 'var(--vyora-surface)',
+                border: '1.5px solid var(--vyora-border-strong)',
+                color: 'var(--vyora-gold)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+                e.currentTarget.style.borderColor = 'var(--vyora-gold)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.borderColor = 'var(--vyora-border-strong)';
+              }}
+            >
+              {theme === 'day' ? <Moon size={13} /> : <Sun size={13} />}
+            </button>
+          </div>
         </div>
       </div>
     </nav>

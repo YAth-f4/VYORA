@@ -3,7 +3,7 @@ import SectionTitle from '../components/SectionTitle';
 import MovieCard from '../components/MovieCard';
 import MovieDNA from '../components/MovieDNA';
 import { getMovies } from '../services/api';
-import { Search, LayoutGrid, List, SlidersHorizontal, Star, ArrowUpRight } from 'lucide-react';
+import { Search, LayoutGrid, List, Star, ArrowUpRight } from 'lucide-react';
 
 export default function Explore({ onSelectMovie }) {
   const [movies, setMovies] = useState([]);
@@ -39,7 +39,6 @@ export default function Explore({ onSelectMovie }) {
   return (
     <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 24px 80px 24px' }}>
       <SectionTitle
-        number="02"
         badgeText="FILM ARCHIVE VAULT"
         title="EXPLORE THE CATALOG"
         subtitle="Filter and search through curated films with full vector DNA analytics and critical scores."
@@ -49,9 +48,9 @@ export default function Explore({ onSelectMovie }) {
       <div
         style={{
           padding: '24px',
-          backgroundColor: '#EDE2D2',
-          border: '1px solid rgba(116, 107, 99, 0.25)',
-          borderRadius: '3px',
+          backgroundColor: 'var(--vyora-surface)',
+          border: '1px solid var(--vyora-border-strong)',
+          borderRadius: '4px',
           marginBottom: '36px',
           display: 'flex',
           flexDirection: 'column',
@@ -70,7 +69,7 @@ export default function Explore({ onSelectMovie }) {
           >
             <Search
               size={18}
-              color="#C9572C"
+              color="var(--vyora-accent)"
               style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }}
             />
             <input
@@ -81,18 +80,18 @@ export default function Explore({ onSelectMovie }) {
               style={{
                 width: '100%',
                 padding: '12px 14px 12px 42px',
-                backgroundColor: '#FAF6F0',
-                border: '1px solid rgba(116, 107, 99, 0.3)',
-                borderRadius: '2px',
+                backgroundColor: 'var(--vyora-bg-secondary)',
+                border: '1px solid var(--vyora-border)',
+                borderRadius: '3px',
                 fontSize: '0.95rem',
-                color: '#252322',
+                color: 'var(--vyora-text)',
                 outline: 'none'
               }}
             />
           </div>
 
           {/* View Mode Toggle Buttons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#FAF6F0', padding: '4px', borderRadius: '2px', border: '1px solid rgba(116, 107, 99, 0.2)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: 'var(--vyora-bg-secondary)', padding: '4px', borderRadius: '3px', border: '1px solid var(--vyora-border)' }}>
             <button
               onClick={() => setViewMode('grid')}
               style={{
@@ -102,8 +101,8 @@ export default function Explore({ onSelectMovie }) {
                 padding: '8px 14px',
                 border: 'none',
                 borderRadius: '2px',
-                backgroundColor: viewMode === 'grid' ? '#C9572C' : 'transparent',
-                color: viewMode === 'grid' ? '#FFF' : '#252322',
+                backgroundColor: viewMode === 'grid' ? 'var(--vyora-accent)' : 'transparent',
+                color: viewMode === 'grid' ? '#120A18' : 'var(--vyora-text)',
                 cursor: 'pointer',
                 fontWeight: 600,
                 fontSize: '0.82rem'
@@ -122,37 +121,40 @@ export default function Explore({ onSelectMovie }) {
                 padding: '8px 14px',
                 border: 'none',
                 borderRadius: '2px',
-                backgroundColor: viewMode === 'list' ? '#C9572C' : 'transparent',
-                color: viewMode === 'list' ? '#FFF' : '#252322',
+                backgroundColor: viewMode === 'list' ? 'var(--vyora-accent)' : 'transparent',
+                color: viewMode === 'list' ? '#120A18' : 'var(--vyora-text)',
                 cursor: 'pointer',
                 fontWeight: 600,
                 fontSize: '0.82rem'
               }}
             >
               <List size={15} />
-              <span>MAGAZINE LIST</span>
+              <span>LIST VAULT</span>
             </button>
           </div>
         </div>
 
-        {/* Bottom Row: Genre Filter & Rating Slider */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap', paddingTop: '16px', borderTop: '1px dashed rgba(116, 107, 99, 0.25)' }}>
-          {/* Genre Pills */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#746B63', marginRight: '6px' }}>GENRE:</span>
+        {/* Filter Controls Row */}
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', paddingTop: '16px', borderTop: '1px dashed var(--vyora-border)' }}>
+          {/* Genre Filter Pills */}
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--vyora-text-muted)', fontWeight: 600 }}>
+              GENRE:
+            </span>
             {genres.map(g => (
               <button
                 key={g}
                 onClick={() => setSelectedGenre(g)}
                 style={{
                   padding: '5px 12px',
-                  borderRadius: '2px',
-                  border: selectedGenre === g ? '1px solid #C9572C' : '1px solid rgba(116, 107, 99, 0.2)',
-                  backgroundColor: selectedGenre === g ? '#C9572C' : '#FAF6F0',
-                  color: selectedGenre === g ? '#FFF' : '#252322',
-                  fontSize: '0.78rem',
-                  fontWeight: 600,
-                  cursor: 'pointer'
+                  borderRadius: '3px',
+                  fontSize: '0.8rem',
+                  fontWeight: selectedGenre === g ? 'bold' : '500',
+                  border: selectedGenre === g ? '1px solid var(--vyora-accent)' : '1px solid var(--vyora-border)',
+                  backgroundColor: selectedGenre === g ? 'var(--vyora-accent)' : 'var(--vyora-bg-secondary)',
+                  color: selectedGenre === g ? '#120A18' : 'var(--vyora-text)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
                 }}
               >
                 {g}
@@ -160,38 +162,31 @@ export default function Explore({ onSelectMovie }) {
             ))}
           </div>
 
-          {/* Rating Slider */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: 'auto' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#746B63' }}>
-              MIN RATING: <strong style={{ color: '#C9572C' }}>{minRating}</strong>
+          {/* Rating Slider Filter */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--vyora-text-muted)' }}>
+              MIN RATING: <strong style={{ color: 'var(--vyora-accent)' }}>{minRating}</strong>
             </span>
             <input
               type="range"
-              min="7.0"
+              min="6.0"
               max="9.0"
               step="0.1"
               value={minRating}
               onChange={e => setMinRating(parseFloat(e.target.value))}
-              style={{ accentColor: '#C9572C', cursor: 'pointer' }}
+              style={{ accentColor: 'var(--vyora-accent)', cursor: 'pointer' }}
             />
           </div>
         </div>
       </div>
 
-      {/* Results Count Header */}
-      <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontSize: '0.9rem', color: '#746B63', fontWeight: 600 }}>
-          SHOWING {filteredMovies.length} FILMS MATCHING CRITERIA
-        </span>
-      </div>
-
-      {/* Render View Modes */}
+      {/* Grid or List Display */}
       {viewMode === 'grid' ? (
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-            gap: '28px'
+            gap: '24px'
           }}
         >
           {filteredMovies.map(movie => (
@@ -199,77 +194,43 @@ export default function Explore({ onSelectMovie }) {
           ))}
         </div>
       ) : (
-        /* Editorial Magazine List View */
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {filteredMovies.map(movie => (
             <div
               key={movie.id}
               onClick={() => onSelectMovie(movie)}
               style={{
-                backgroundColor: '#FAF6F0',
-                border: '1px solid rgba(116, 107, 99, 0.22)',
-                borderRadius: '3px',
-                padding: '24px',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(12, 1fr)',
-                gap: '24px',
-                alignItems: 'center',
+                display: 'flex',
+                gap: '20px',
+                padding: '16px',
+                backgroundColor: 'var(--vyora-surface)',
+                border: '1px solid var(--vyora-border)',
+                borderRadius: '4px',
                 cursor: 'pointer',
-                transition: 'all 0.3s ease'
+                transition: 'border-color 0.2s ease'
               }}
-              onMouseEnter={e => (e.currentTarget.style.borderColor = '#C9572C')}
-              onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(116, 107, 99, 0.22)')}
             >
-              {/* Poster Thumbnail */}
-              <div style={{ gridColumn: 'span 2' }}>
-                <img
-                  src={movie.poster}
-                  alt={movie.title}
-                  style={{
-                    width: '100%',
-                    height: '140px',
-                    objectFit: 'cover',
-                    borderRadius: '2px',
-                    border: '1px solid rgba(116, 107, 99, 0.2)'
-                  }}
-                />
-              </div>
-
-              {/* Title & Info */}
-              <div style={{ gridColumn: 'span 6' }}>
-                <div style={{ display: 'flex', gap: '8px', marginBottom: '6px' }}>
-                  <span className="stamp-badge-gold" style={{ fontSize: '0.65rem' }}>{movie.year}</span>
-                  {movie.genres.map(g => (
-                    <span key={g} className="stamp-badge" style={{ fontSize: '0.65rem' }}>{g}</span>
-                  ))}
+              <img
+                src={movie.poster}
+                alt={movie.title}
+                style={{ width: '70px', height: '100px', objectFit: 'cover', borderRadius: '3px' }}
+              />
+              <div style={{ flexGrow: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <h3 className="font-editorial" style={{ fontSize: '1.4rem', color: 'var(--vyora-text)', margin: '0 0 4px 0' }}>
+                    {movie.title} ({movie.year})
+                  </h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--vyora-gold)' }}>
+                    <Star size={14} fill="var(--vyora-gold)" />
+                    <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{movie.rating}</span>
+                  </div>
                 </div>
-
-                <h3 className="font-editorial" style={{ fontSize: '1.5rem', color: '#252322', marginBottom: '4px' }}>
-                  {movie.title}
-                </h3>
-                <p style={{ fontSize: '0.85rem', color: '#632C32', fontWeight: 600, marginBottom: '8px' }}>
-                  Directed by {movie.director} • {movie.runtime}
+                <p style={{ fontSize: '0.85rem', color: 'var(--vyora-accent)', margin: '0 0 8px 0' }}>
+                  {movie.director} • {movie.runtime} • {movie.genres.join(', ')}
                 </p>
-                <p style={{ fontSize: '0.85rem', color: '#746B63', margin: 0, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                <p style={{ fontSize: '0.88rem', color: 'var(--vyora-text-muted)', margin: 0, lineHeight: 1.4 }}>
                   {movie.description}
                 </p>
-              </div>
-
-              {/* Rating & Action */}
-              <div style={{ gridColumn: 'span 4', textAlign: 'right' }}>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: '#EDE2D2', padding: '6px 12px', borderRadius: '2px', marginBottom: '12px' }}>
-                  <Star size={16} fill="#D7A84B" color="#D7A84B" />
-                  <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#252322', fontFamily: 'var(--font-editorial)' }}>
-                    {movie.rating}
-                  </span>
-                </div>
-
-                <div>
-                  <button className="btn-cinematic-ghost">
-                    <span>DECODE MOVIE DNA</span>
-                    <ArrowUpRight size={16} />
-                  </button>
-                </div>
               </div>
             </div>
           ))}

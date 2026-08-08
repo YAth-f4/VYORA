@@ -11,14 +11,14 @@ export default function MoodCard({ mood, isSelected, isAnySelected, onSelect }) 
         position: 'relative',
         textAlign: 'left',
         padding: '24px',
-        backgroundColor: isSelected ? '#FAF6F0' : '#EDE2D2',
-        border: isSelected ? `2px solid ${mood.accent}` : '1px solid rgba(116, 107, 99, 0.2)',
-        borderRadius: '3px',
+        backgroundColor: isSelected ? 'var(--bg-card)' : 'var(--bg-sand)',
+        border: isSelected ? `2px solid ${mood.accent}` : '1px solid var(--border-medium)',
+        borderRadius: '4px',
         cursor: 'pointer',
         transition: 'all 0.35s cubic-bezier(0.25, 1, 0.3, 1)',
         transform: isSelected ? 'translateY(-6px) scale(1.02)' : 'translateY(0) scale(1)',
         opacity: isAnySelected && !isSelected ? 0.65 : 1,
-        boxShadow: isSelected ? `0 12px 28px ${mood.accent}33` : '0 4px 12px rgba(37, 35, 34, 0.04)',
+        boxShadow: isSelected ? `0 12px 28px ${mood.accent}33` : 'var(--shadow-sm)',
         outline: 'none',
         display: 'flex',
         flexDirection: 'column',
@@ -28,7 +28,7 @@ export default function MoodCard({ mood, isSelected, isAnySelected, onSelect }) 
       }}
       className="mood-card"
     >
-      {/* Background Accent Bar (visible on selected/hover) */}
+      {/* Top Accent Bar */}
       <div
         style={{
           position: 'absolute',
@@ -57,8 +57,8 @@ export default function MoodCard({ mood, isSelected, isAnySelected, onSelect }) 
             style={{
               width: '44px',
               height: '44px',
-              borderRadius: '2px',
-              backgroundColor: isSelected ? mood.accent : 'rgba(116, 107, 99, 0.1)',
+              borderRadius: '3px',
+              backgroundColor: isSelected ? mood.accent : 'var(--bg-card)',
               color: isSelected ? '#FAF6F0' : mood.accent,
               display: 'flex',
               alignItems: 'center',
@@ -76,7 +76,7 @@ export default function MoodCard({ mood, isSelected, isAnySelected, onSelect }) 
               letterSpacing: '0.12em',
               textTransform: 'uppercase',
               color: mood.accent,
-              opacity: isSelected ? 1 : 0.75
+              opacity: isSelected ? 1 : 0.85
             }}
           >
             {mood.tagline}
@@ -87,8 +87,8 @@ export default function MoodCard({ mood, isSelected, isAnySelected, onSelect }) 
         <h3
           className="font-editorial"
           style={{
-            fontSize: '1.4rem',
-            color: '#252322',
+            fontSize: '1.35rem',
+            color: 'var(--text-charcoal)',
             marginBottom: '8px',
             lineHeight: 1.2
           }}
@@ -99,8 +99,8 @@ export default function MoodCard({ mood, isSelected, isAnySelected, onSelect }) 
         {/* Description */}
         <p
           style={{
-            fontSize: '0.85rem',
-            color: '#746B63',
+            fontSize: '0.88rem',
+            color: 'var(--text-muted)',
             lineHeight: 1.45,
             margin: 0
           }}
@@ -120,10 +120,10 @@ export default function MoodCard({ mood, isSelected, isAnySelected, onSelect }) 
           fontWeight: 700,
           letterSpacing: '0.08em',
           textTransform: 'uppercase',
-          color: isSelected ? mood.accent : '#746B63'
+          color: isSelected ? mood.accent : 'var(--text-muted)'
         }}
       >
-        <span>{isSelected ? '✓ SELECTED MOOD' : 'EXPLORE MOOD →'}</span>
+        <span>{isSelected ? '✓ SELECTED MOOD' : 'EXPLORE VIBE →'}</span>
       </div>
     </button>
   );
