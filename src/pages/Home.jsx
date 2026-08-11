@@ -5,8 +5,15 @@ import MovieGrid from '../components/MovieGrid';
 import VibeDrop from '../components/VibeDrop';
 import SharedVibes from '../components/SharedVibes';
 import SectionTitle from '../components/SectionTitle';
-import { getMovies, getMoods, getSharedVibes } from '../services/api';
-import { Sparkles, SlidersHorizontal, Users } from 'lucide-react';
+import {
+  getMovies,
+  getMoods,
+  getSharedVibes,
+} from '../services/api';
+import {
+  Sparkles,
+  SlidersHorizontal,
+} from 'lucide-react';
 
 export default function Home({ onSelectMovie }) {
   const [movies, setMovies] = useState([]);
@@ -14,77 +21,259 @@ export default function Home({ onSelectMovie }) {
   const [selectedMood, setSelectedMood] = useState(null);
   const [sharedVibeData, setSharedVibeData] = useState(null);
   const [showMixer, setShowMixer] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
+  // Load initial data
   useEffect(() => {
     async function loadData() {
-      const allMovies = await getMovies();
-      const allMoods = await getMoods();
-      const shared = await getSharedVibes('aarav-sci-fi');
-      setMovies(allMovies);
-      setMoods(allMoods);
-      setSharedVibeData(shared);
+      try {
+        setLoading(true);
+        setError('');
+
+        const allMovies = await getMovies();
+        const allMoods = await getMoods();
+        const shared = await getSharedVibes('aarav-sci-fi');
+
+        setMovies(allMovies);
+        setMoods(allMoods);
+        setSharedVibeData(shared);
+      } catch (err) {
+        console.error('Failed to load home data:', err);
+        setError(
+          'Unable to load movie recommendations. Please make sure the backend is running.'
+        );
+      } finally {
+        setLoading(false);
+      }
     }
+
     loadData();
   }, []);
 
-  const handleSelectMood = (mood) => {
-    if (selectedMood?.id === mood.id) {
-      setSelectedMood(null);
-    } else {
+  // Select a mood and get matching movies
+  const handleSelectMood = async (mood) => {
+    try {
+      setError('');
+
+      // If the same mood is clicked again,
+      // reset back to all movies.
+      if (selectedMood?.id === mood.id) {
+        setSelectedMood(null);
+
+        setLoading(true);
+
+        const allMovies = await getMovies({
+          sortBy: 'rating',
+        });
+
+        setMovies(allMovies);
+
+        setLoading(false);
+
+        return;
+      }
+
       setSelectedMood(mood);
-      const el = document.getElementById('recommendations');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      setLoading(true);
+
+      // Get movies matching selected mood
+      const filteredMovies = await getMovies({
+        mood: mood.id,
+        sortBy: 'match',
+      });
+
+      setMovies(filteredMovies);
+
+      setLoading(false);
+
+      // Scroll to recommendations
+      const el = document.getElementById(
+        'recommendations'
+      );
+
+      if (el) {
+        el.scrollIntoView({
+          behavior: 'smooth',
+        });
+      }
+    } catch (err) {
+      console.error(
+        'Failed to load mood recommendations:',
+        err
+      );
+
+      setError(
+        'Could not load recommendations for this mood.'
+      );
+
+      setLoading(false);
     }
   };
 
-  const handleResetMood = () => {
-    setSelectedMood(null);
+  // Reset mood
+  const handleResetMood = async () => {
+    try {
+      setSelectedMood(null);
+      setLoading(true);
+      setError('');
+
+      const allMovies = await getMovies({
+        sortBy: 'rating',
+      });
+
+      setMovies(allMovies);
+    } catch (err) {
+      console.error(
+        'Failed to reset recommendations:',
+        err
+      );
+
+      setError(
+        'Could not reload the movie library.'
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
+  // Vibe Mixer
   const handleMixVibe = async (mixDimensions) => {
-    const sorted = await getMovies({ sortBy: 'match' });
-    setMovies(sorted);
-    const el = document.getElementById('recommendations');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    try {
+      setLoading(true);
+      setError('');
+
+      const sorted = await getMovies({
+        sortBy: 'match',
+      });
+
+      setMovies(sorted);
+
+      setLoading(false);
+
+      const el = document.getElementById(
+        'recommendations'
+      );
+
+      if (el) {
+        el.scrollIntoView({
+          behavior: 'smooth',
+        });
+      }
+    } catch (err) {
+      console.error(
+        'Failed to mix vibe:',
+        err
+      );
+
+      setError(
+        'Could not generate your vibe recommendations.'
+      );
+
+      setLoading(false);
+    }
   };
 
   return (
-    <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 24px 80px 24px' }}>
+    <main
+      style={{
+        maxWidth: '1280px',
+        margin: '0 auto',
+        padding: '40px 24px 80px 24px',
+      }}
+    >
       {/* Top Banner Header */}
-      <div style={{ marginBottom: '48px', textAlign: 'center' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '4px 12px', backgroundColor: 'var(--bg-sand)', borderRadius: '2px', marginBottom: '12px' }}>
-          <Sparkles size={16} color="var(--accent-burnt-orange)" />
-          <span style={{ fontSize: '0.75rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--accent-burnt-orange)', fontWeight: 'bold' }}>
+      <div
+        style={{
+          marginBottom: '48px',
+          textAlign: 'center',
+        }}
+      >
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '4px 12px',
+            backgroundColor: 'var(--bg-sand)',
+            borderRadius: '2px',
+            marginBottom: '12px',
+          }}
+        >
+          <Sparkles
+            size={16}
+            color="var(--accent-burnt-orange)"
+          />
+
+          <span
+            style={{
+              fontSize: '0.75rem',
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'var(--accent-burnt-orange)',
+              fontWeight: 'bold',
+            }}
+          >
             🎬 REEL VIBE MOVIE DISCOVERY
           </span>
         </div>
-        <h1 className="heading-editorial" style={{ fontSize: 'clamp(2.5rem, 5vw, 4.2rem)', color: 'var(--text-charcoal)', marginBottom: '8px' }}>
+
+        <h1
+          className="heading-editorial"
+          style={{
+            fontSize: 'clamp(2.5rem, 5vw, 4.2rem)',
+            color: 'var(--text-charcoal)',
+            marginBottom: '8px',
+          }}
+        >
           WHAT'S YOUR VIBE TODAY?
         </h1>
-        <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto 24px auto' }}>
-          Select an emotional state or fine-tune sensory dimensions to generate personalized film recommendations.
+
+        <p
+          style={{
+            fontSize: '1.1rem',
+            color: 'var(--text-muted)',
+            maxWidth: '600px',
+            margin: '0 auto 24px auto',
+          }}
+        >
+          Select an emotional state or fine-tune sensory
+          dimensions to generate personalized film
+          recommendations.
         </p>
 
-        {/* Toggle Vibe Mixer button */}
+        {/* Toggle Vibe Mixer */}
         <button
           type="button"
-          onClick={() => setShowMixer(!showMixer)}
+          onClick={() =>
+            setShowMixer(!showMixer)
+          }
           className="btn-cinematic-secondary"
-          style={{ fontSize: '0.85rem', padding: '8px 18px' }}
+          style={{
+            fontSize: '0.85rem',
+            padding: '8px 18px',
+          }}
         >
           <SlidersHorizontal size={15} />
-          <span>{showMixer ? "HIDE VIBE MIXER" : "OPEN VIBE MIXER SLIDERS"}</span>
+
+          <span>
+            {showMixer
+              ? 'HIDE VIBE MIXER'
+              : 'OPEN VIBE MIXER SLIDERS'}
+          </span>
         </button>
       </div>
 
-      {/* 1. Vibe Mixer (Optional) */}
+      {/* Vibe Mixer */}
       {showMixer && (
         <div className="animate-fade-in">
-          <VibeMixer onMixVibe={handleMixVibe} />
+          <VibeMixer
+            onMixVibe={handleMixVibe}
+          />
         </div>
       )}
 
-      {/* 2. Mood Selector */}
+      {/* Mood Selector */}
       <MoodSelector
         moods={moods}
         selectedMood={selectedMood}
@@ -92,26 +281,66 @@ export default function Home({ onSelectMovie }) {
         onResetMood={handleResetMood}
       />
 
-      {/* 3. Editorial Recommendation Matches */}
-      <section id="recommendations" style={{ marginBottom: '60px' }}>
+      {/* Error Message */}
+      {error && (
+        <div
+          style={{
+            margin: '24px 0',
+            padding: '16px 20px',
+            border: '1px solid var(--accent-burnt-orange)',
+            backgroundColor: 'var(--bg-card)',
+            color: 'var(--text-charcoal)',
+            borderRadius: '4px',
+          }}
+        >
+          {error}
+        </div>
+      )}
+
+      {/* Recommendations */}
+      <section
+        id="recommendations"
+        style={{
+          marginBottom: '60px',
+        }}
+      >
         <SectionTitle
           badgeText="YOUR VIBE MATCHES"
           title="RECOMMENDED FOR YOUR MOOD"
           subtitle="Editorial film cards complete with vector match percentages, atmosphere tags, and VYORA'S TAKE."
         />
 
-        <MovieGrid
-          movies={movies}
-          selectedMood={selectedMood}
-          onSelectMovie={onSelectMovie}
-        />
+        {loading ? (
+          <div
+            style={{
+              padding: '60px 20px',
+              textAlign: 'center',
+              color: 'var(--text-muted)',
+            }}
+          >
+            Finding movies for your vibe...
+          </div>
+        ) : (
+          <MovieGrid
+            movies={movies}
+            selectedMood={selectedMood}
+            onSelectMovie={onSelectMovie}
+          />
+        )}
       </section>
 
-      {/* 4. Vibe Drop */}
-      <VibeDrop movies={movies} onSelectMovie={onSelectMovie} />
+      {/* Vibe Drop */}
+      <VibeDrop
+        movies={movies}
+        onSelectMovie={onSelectMovie}
+      />
 
-      {/* 5. Vibe Exchange Preview */}
-      <section style={{ marginTop: '60px' }}>
+      {/* Vibe Exchange Preview */}
+      <section
+        style={{
+          marginTop: '60px',
+        }}
+      >
         <SectionTitle
           badgeText="VIBE EXCHANGE"
           title="RECOMMENDED FROM YOUR CIRCLE"
