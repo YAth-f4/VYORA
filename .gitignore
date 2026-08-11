@@ -21,6 +21,13 @@ dist-ssr
 .env.*
 !.env.example
 
+# Database files
+
+*.db
+*.sqlite
+*.sqlite3
+vyora.db
+
 # Editor directories and files
 
 venv/
