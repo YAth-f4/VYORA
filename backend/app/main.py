@@ -1,13 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import movies
-
+from backend.app.routes import movies, users
 
 app = FastAPI()
 
-
-# Allow React frontend to communicate with FastAPI
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -19,8 +16,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 app.include_router(movies.router, prefix="/api/movies")
+app.include_router(users.router, prefix="/api/users")
 
 
 @app.get("/")
